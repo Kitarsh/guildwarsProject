@@ -1,0 +1,1 @@
+; We will try to run in every 4 directions
