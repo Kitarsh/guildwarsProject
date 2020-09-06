@@ -93,7 +93,7 @@ Local $mBase = 0x00C50000
 Local $mASMString, $mASMSize, $mASMCodeOffset
 Local $SecondInject
 
-Local $mGUI = GUICreate('GWA²'), $mSkillActivate, $mSkillCancel, $mSkillComplete, $mChatReceive, $mLoadFinished
+Local $mGUI = GUICreate('GWAï¿½'), $mSkillActivate, $mSkillCancel, $mSkillComplete, $mChatReceive, $mLoadFinished
 Local $mSkillLogStruct = DllStructCreate('dword;dword;dword;float')
 Local $mSkillLogStructPtr = DllStructGetPtr($mSkillLogStruct)
 Local $mChatLogStruct = DllStructCreate('dword;wchar[256]')
@@ -315,13 +315,14 @@ Func GetHwnd($aProc)
 	Next
 EndFunc   ;==>GetHwnd
 
-;~ Description: Injects GWA² into the game client.
+;~ Description: Injects GWAï¿½ into the game client.
 Func Initialize($aGW, $bChangeTitle = True, $aUseStringLog = False, $aUseEventSystem = True)
 	Local $lWinList, $lWinList2, $mGWProcessId
 	$mUseStringLog = $aUseStringLog
 	$mUseEventSystem = $aUseEventSystem
 
 	If IsString($aGW) Then
+		; this doesn't work. It will only work if the player name is a regex to identify "gw.exe".
 		Local $lProcessList = ProcessList("gw.exe")
 		For $i = 1 To $lProcessList[0][0]
 			$mGWProcessId = $lProcessList[$i][1]
@@ -1860,7 +1861,7 @@ EndFunc   ;==>DisplayEnemies
 
 #Region Chat
 ;~ Description: Write a message in chat (can only be seen by botter).
-Func WriteChat($aMessage, $aSender = 'GWA²')
+Func WriteChat($aMessage, $aSender = 'GWAï¿½')
 	Local $lMessage, $lSender
 	Local $lAddress = 256 * $mQueueCounter + $mQueueBase
 
@@ -3857,6 +3858,13 @@ EndFunc   ;==>GetProfPrimaryAttribute
 
 #Region Other Functions
 #Region Misc
+
+;~ Description: Log the information.
+Func Out($val)
+    ;### Debug CONSOLE â†“â†“â†“
+    ConsoleWrite('@@ Debug(' & @ScriptLineNumber & ') : $val = ' & $val & @CRLF & '>Error code: ' & @error & @CRLF)
+EndFunc ; Out
+
 ;~ Description: Sleep a random amount of time.
 Func RndSleep($aAmount, $aRandom = 0.05)
 	Local $lRandom = $aAmount * $aRandom
@@ -4907,7 +4915,7 @@ Func CreateCommands()
 
 	_('CommandAction:')
 	_('mov ecx,dword[ActionBase]')
-	_('mov ecx,dword[ecx+Ñ]')
+	_('mov ecx,dword[ecx+ï¿½]')
 	_('add ecx,A0')
 	_('push 0')
 	_('add eax,4')
@@ -5694,7 +5702,7 @@ Func _($aASM)
 					$lOpCode = '8B4140'
 			    Case 'mov ecx,dword[ecx+4]'
 					$lOpCode = '8B4904'
-			    Case 'mov ecx,dword[ecx+Ñ]'
+			    Case 'mov ecx,dword[ecx+ï¿½]'
 					$lOpCode = '8B490C'
 				Case 'mov ecx,dword[ecx+8]'
 					$lOpCode = '8B4908'
