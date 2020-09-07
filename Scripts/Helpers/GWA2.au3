@@ -2934,7 +2934,7 @@ Func GetAgentExists($aAgentID)
 EndFunc   ;==>GetAgentExists
 
 ;~ Description: Returns the target of an agent.
-Func GetTarget($aAgent)
+Func GetTarget($aAgent = -2)
 	Local $lAgentID
 
 	If IsDllStruct($aAgent) = 0 Then

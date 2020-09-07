@@ -38,7 +38,12 @@ Func Move_GoForward($distanceToTravel = 500)
         $traveledDistance = Sqrt(($currentX - $startingX) ^ 2 + ($currentY - $startingY) ^ 2)
         Sleep(20)
         If DllStructGetData(GetAgentByID(), 'MoveX') == 0 And DllStructGetData(GetAgentByID(), 'MoveY') == 0 Then
-            ExitLoop
+            $i += 1
+            if ($i > 10) then
+                ExitLoop
+            EndIf
+        Else
+            $i = 0
         EndIf
     WEnd
     MoveForward(false)

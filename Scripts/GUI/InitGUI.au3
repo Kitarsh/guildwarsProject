@@ -1,9 +1,5 @@
 
 Global $idEdit_Console
-Global $idLeft_Btn
-Global $idRight_Btn
-Global $idForward_Btn
-Global $idPosition_Btn
 
 Func GUI_Init()
     GUICreate("Guild Wars Project", 500, 500, -1, -1)
@@ -23,6 +19,9 @@ Func GUI_Init()
     ;~ Create the right button
     $idRight_Btn = GUICtrlCreateButton("→", 350, 240, 50, 50)
     
+    ;~ Create the attackNearest button
+    $idAttackNearest_Btn = GUICtrlCreateButton("Attack Nearest", 230, 310, 170, 50)
+
     ;Show window/Make the window visible
     GUISetState(@SW_SHOW)
     
@@ -53,6 +52,10 @@ Func GUI_Init()
             
             Case $iMsg = $idPosition_Btn
                 InitGUI_LogPosition()
+
+            Case $iMsg = $idAttackNearest_Btn
+                Target_AttackNearestEnemy()
+
 		EndSelect
     WEnd
 EndFunc ; Init
