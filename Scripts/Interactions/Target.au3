@@ -8,6 +8,22 @@ Func Target_AttackNearestEnemy()
     InitGUI_LogIntoGUIConsole("Attacking !")
 EndFunc ;~ TargetNearestEnemy
 
+Func Target_UseSkillOnTarget($skillNumber)
+	Local $target
+	$target = GetCurrentTarget()
+	If $target == null Or $target == 0 Then 
+		TargetNearestEnemy()
+		Sleep(100)
+		$target = GetCurrentTarget()
+	EndIf
+
+	UseSkill($skillNumber, $target)
+EndFunc ;~ Target_UseSkillOnTarget
+
+Func Target_PickUpNearestLoot()
+	TargetNearestItem()
+    ActionInteract()
+EndFunc ;~ Target_PickUpNearestLoot
 
 Func Target_PickUpLoot()
 	Local $lAgent

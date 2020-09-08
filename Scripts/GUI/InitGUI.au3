@@ -20,7 +20,12 @@ Func GUI_Init()
     $idRight_Btn = GUICtrlCreateButton("→", 350, 240, 50, 50)
     
     ;~ Create the attackNearest button
-    $idAttackNearest_Btn = GUICtrlCreateButton("Attack Nearest", 230, 310, 170, 50)
+    $idAttackNearest_Btn = GUICtrlCreateButton("Attack Nearest", 230, 120, 170, 50)
+    
+    ;~ Create the pick up loop button
+    $idPickUpLoot_Btn = GUICtrlCreateButton("Pick Up Loot", 230, 60, 170, 50)
+
+    SkillsGUI_InitSkillsBtn()
 
     ;Show window/Make the window visible
     GUISetState(@SW_SHOW)
@@ -56,10 +61,37 @@ Func GUI_Init()
             Case $iMsg = $idAttackNearest_Btn
                 Target_AttackNearestEnemy()
 
+            Case $iMsg = $idPickUpLoot_Btn
+                Target_PickUpNearestLoot()
+            
+            Case $iMsg = $idSkill1_Btn
+                Target_UseSkillOnTarget(1)
+            
+            Case $iMsg = $idSkill2_Btn
+                Target_UseSkillOnTarget(2)
+            
+            Case $iMsg = $idSkill3_Btn
+                Target_UseSkillOnTarget(3)
+            
+            Case $iMsg = $idSkill4_Btn
+                Target_UseSkillOnTarget(4)
+            
+            Case $iMsg = $idSkill5_Btn
+                Target_UseSkillOnTarget(5)
+            
+            Case $iMsg = $idSkill6_Btn
+                Target_UseSkillOnTarget(6)
+            
+            Case $iMsg = $idSkill7_Btn
+                Target_UseSkillOnTarget(7)
+            
+            Case $iMsg = $idSkill8_Btn
+                Target_UseSkillOnTarget(8)
+
 		EndSelect
     WEnd
 EndFunc ; Init
-
+ 
 
 ; Description : Log the value in the GUI Console.
 Func InitGUI_LogIntoGUIConsole($value = '')

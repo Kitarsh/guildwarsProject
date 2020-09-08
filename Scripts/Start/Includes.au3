@@ -1,7 +1,11 @@
 ;~ Including the current project's scripts.
 #include "../Actions/Move.au3"
+
 #include "../Helpers/GWA2.au3"
+
+#include "../GUI/SkillsGUI.au3"
 #include "../GUI/InitGUI.au3"
+
 #include "../Interactions/Target.au3"
 
 ;~ Including AutoIt librairies.
