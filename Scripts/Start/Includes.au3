@@ -1,7 +1,8 @@
 ;~ Including the current project's scripts.
-#include "../Actions/Move.au3"
-
 #include "../Helpers/GWA2.au3"
+#include "../Helpers/AutoItHelpers.au3"
+
+#include "../Actions/Move.au3"
 
 #include "../GUI/SkillsGUI.au3"
 #include "../GUI/InitGUI.au3"
@@ -13,6 +14,8 @@
 #include <ComboConstants.au3>
 #include <GUIConstantsEx.au3>
 #include <StaticConstants.au3>
+#include <TreeViewConstants.au3>
+#include <GuiListView.au3>
 #include <WindowsConstants.au3>
 #include <ScrollBarsConstants.au3>
 #include <Misc.au3>
@@ -22,3 +25,4 @@
 #include <Array.au3>
 #include <Constants.au3>
 #Include <GuiSlider.au3>
+#include <AVIConstants.au3>

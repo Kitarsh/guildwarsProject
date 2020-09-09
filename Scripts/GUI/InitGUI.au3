@@ -1,11 +1,16 @@
 
 Global $idEdit_Console
+Global $idWaypoints_ListView
+Global $idsWaypoints_ListViewItems[32]
 
 Func GUI_Init()
-    GUICreate("Guild Wars Project", 500, 500, -1, -1)
+    GUICreate("Guild Wars Project", 700, 400, -1, -1)
 
 	;~ Create an edit box with no text in it
-	$idEdit_Console = GUICtrlCreateEdit("", 10, 10, 200, 280)
+    $idEdit_Console = GUICtrlCreateEdit("", 10, 10, 200, 280)
+    
+	;~ Create an listview with no text in it for Waypoints
+    $idWaypoints_ListView = GUICtrlCreateListView("Waypoints| |", 490, 10, 200, 280)
 
     ;~ Create the up button
     $idForward_Btn = GUICtrlCreateButton("↑", 290, 180, 50, 50)
@@ -88,6 +93,15 @@ Func GUI_Init()
             Case $iMsg = $idSkill8_Btn
                 Target_UseSkillOnTarget(8)
 
+            Case $iMsg = $idWaypoints_ListView
+                ;### Debug MSGBOX ↓↓↓
+                MsgBox(262144, 'Debug line ~' & @ScriptLineNumber, 'Selection:' & @CRLF & '$idWaypoints_ListView' & @CRLF & @CRLF & 'Return:' & @CRLF & $idWaypoints_ListView)
+            
+            Case $iMsg > 0 And ExistInArray($iMsg, $idsWaypoints_ListViewItems)
+                $indexItem = IndexOf($iMsg, $idsWaypoints_ListViewItems)
+                $xPosWaypoint = _GUICtrlListView_GetItem($idWaypoints_ListView, $indexItem - 1, 0)[3]
+                $yPosWaypoint = _GUICtrlListView_GetItem($idWaypoints_ListView, $indexItem - 1, 1)[3]
+                MoveTo($xPosWaypoint, $yPosWaypoint)
 		EndSelect
     WEnd
 EndFunc ; Init
@@ -111,4 +125,7 @@ Func InitGUI_LogPosition()
     InitGUI_LogIntoGUIConsole("Current Position :")
     InitGUI_LogIntoGUIConsole("X : " & $currentPosition[0])
     InitGUI_LogIntoGUIConsole("Y : " & $currentPosition[1])
+    $newWaypoints = GUICtrlCreateListViewItem(Round($currentPosition[0]) & "|" & Round($currentPosition[1]), $idWaypoints_ListView)
+    $count = _GUICtrlListView_GetItemCount($idWaypoints_ListView)
+    $idsWaypoints_ListViewItems[$count] = $newWaypoints
 EndFunc ;~ InitGUI_LogPosition
