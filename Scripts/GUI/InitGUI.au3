@@ -49,7 +49,7 @@ Func GUI_Init()
 				;Destroy the GUI including the controls
 				GUIDelete()
 				;Exit the script
-                Exit
+                ExitLoop
             
             Case $iMsg = $idLeft_Btn
                 Move_TurnLeft()
@@ -97,10 +97,17 @@ Func GUI_Init()
                 ;### Debug MSGBOX ↓↓↓
                 MsgBox(262144, 'Debug line ~' & @ScriptLineNumber, 'Selection:' & @CRLF & '$idWaypoints_ListView' & @CRLF & @CRLF & 'Return:' & @CRLF & $idWaypoints_ListView)
             
-            Case $iMsg > 0 And ExistInArray($iMsg, $idsWaypoints_ListViewItems)
-                $indexItem = IndexOf($iMsg, $idsWaypoints_ListViewItems)
+            Case $iMsg > 0 And Array_Contains($iMsg, $idsWaypoints_ListViewItems)
+                $indexItem = Array_IndexOf($iMsg, $idsWaypoints_ListViewItems)
                 $xPosWaypoint = _GUICtrlListView_GetItem($idWaypoints_ListView, $indexItem - 1, 0)[3]
                 $yPosWaypoint = _GUICtrlListView_GetItem($idWaypoints_ListView, $indexItem - 1, 1)[3]
+
+                ;~ Logging Movement
+                Local $paramsLog[2]
+                $paramsLog[0] = $xPosWaypoint
+                $paramsLog[1] = $yPosWaypoint
+                File_LogFunction("MoveTo", $paramsLog)
+
                 MoveTo($xPosWaypoint, $yPosWaypoint)
 		EndSelect
     WEnd
