@@ -8,6 +8,7 @@
 #include "../GUI/SkillsGUI.au3"
 #include "../GUI/InitGUI.au3"
 
+#include "../Interactions/Items.au3"
 #include "../Interactions/Target.au3"
 
 ;~ Including AutoIt librairies.

@@ -20,22 +20,18 @@ Func Target_FightingPattern()
 	Until $nearestEnnemiAgentID <> 0
 
 	$distanceToTarget = Target_GetDistanceToTarget()
-	InitGUI_LogIntoGUIConsole("Distance to Target : " & $distanceToTarget)
-
 	If $distanceToTarget > 1500 Then Return
 
 	While $distanceToTarget < 1800 and $distanceToTarget > 0
 		;~ TODO : Change ActionInteract and while by Real pattern of attack
 		Attack($nearestEnnemiAgentID)
 		While GetCurrentTargetID() <> ""
-			Sleep(200)
-			InitGUI_LogIntoGUIConsole("Waiting for target to die")
+			Target_DoActionToFight()
 		WEnd
 		TargetNearestEnemy()
 		Sleep(200)
 		$nearestEnnemiAgentID = GetCurrentTargetID()
 		$distanceToTarget = Target_GetDistanceToTarget()
-		InitGUI_LogIntoGUIConsole("Distance to Target : " & $distanceToTarget)
 	WEnd
 	ClearTarget()
 
@@ -90,8 +86,8 @@ Func Target_PickUpLoot()
 		ChangeTarget($i)
 		Sleep(200)
 		If Target_GetDistanceToTarget() > 2500 Then ContinueLoop
-		
-		If GetCanPickUp($aitem) Then
+		If Not(GetCanPickUp($aitem)) Then ContinueLoop
+		If Items_CanPickUp($aitem) Then
             PickUpItem($aitem) 
 			$lDeadlock = TimerInit()
 			While GetAgentExists($i)
@@ -102,3 +98,31 @@ Func Target_PickUpLoot()
 		EndIf
 	Next
 EndFunc   ;==>PickUpLoot
+
+Func Target_DoActionToFight()
+	Sleep(200)
+	Local $currentTargetAgent = GetCurrentTarget()
+	Local $IdSkillToUse
+	Local $targetToUse
+
+	If GetHealth() < 400 And IsRecharged(4) Then 
+		$IdSkillToUse = 4
+		$targetToUse = -2
+	ElseIf GetHealth() < 350 And IsRecharged(7) Then 
+		$IdSkillToUse = 7
+		$targetToUse = -2
+	ElseIf IsRecharged(2) Then 
+		$IdSkillToUse = 2
+		$targetToUse = $currentTargetAgent
+	ElseIf IsRecharged(3) Then 
+		$IdSkillToUse = 3
+		$targetToUse = $currentTargetAgent
+	ElseIf IsRecharged(1) Then 
+		$IdSkillToUse = 1
+		$targetToUse = -2
+	Else
+		return
+	EndIf
+	
+	UseSkillEx($IdSkillToUse, $targetToUse)
+EndFunc ;~ Target_DoActionToFight
