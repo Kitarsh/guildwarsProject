@@ -8,80 +8,80 @@ EndIf
 
 #Region Headers
 ;=QUEST=+
-Global Const $HEADER_QUEST_ACCEPT = 0x41
-Global Const $HEADER_QUEST_REWARD = 0x41
+Global Const $HEADER_QUEST_ACCEPT = 0x42
+Global Const $HEADER_QUEST_REWARD = 0x42
 Global Const $HEADER_QUEST_ABANDON = 0x12
-Global Const $HEADER_HERO_AGGRESSION = 0x17
-Global Const $HEADER_HERO_LOCK = 0xA1
-Global Const $HEADER_HERO_TOGGLE_SKILL = 0x1C
-Global Const $HEADER_HERO_CLEAR_FLAG = 0x1E
-Global Const $HEADER_HERO_PLACE_FLAG = 0x1E
-Global Const $HEADER_HERO_ADD = 0x23
-Global Const $HEADER_HERO_KICK = 0x24
-Global Const $HEADER_HEROES_KICK = 0x24
-Global Const $HEADER_PARTY_PLACE_FLAG = 0x1F
-Global Const $HEADER_PARTY_CLEAR_FLAG = 0x1F
-Global Const $HEADER_HENCHMAN_ADD = 0xA6
-Global Const $HEADER_PARTY_LEAVE = 0xA9
-Global Const $HEADER_HENCHMAN_KICK = 0xAF
+Global Const $HEADER_HERO_AGGRESSION  = 0x17
+Global Const $HEADER_HERO_LOCK = 0x1A
+Global Const $HEADER_HERO_TOGGLE_SKILL = 0x1A
+Global Const $HEADER_HERO_CLEAR_FLAG = 0x1A
+Global Const $HEADER_HERO_PLACE_FLAG = 0x1A
+Global Const $HEADER_HERO_ADD = 0x21
+Global Const $HEADER_HERO_KICK = 0x22
+Global Const $HEADER_HEROES_KICK = 0x22
+Global Const $HEADER_PARTY_PLACE_FLAG = 0x1E
+Global Const $HEADER_PARTY_CLEAR_FLAG = 0x1E
+Global Const $HEADER_HENCHMAN_ADD = 0xA7
+Global Const $HEADER_PARTY_LEAVE = 0xAA
+Global Const $HEADER_HENCHMAN_KICK = 0xB0
 Global Const $HEADER_CALL_TARGET = 0x28
-Global Const $HEADER_ATTACK_AGENT = 0x2C
-Global Const $HEADER_CANCEL_ACTION = 0x2E
-Global Const $HEADER_GO_PLAYER = 0x39
-Global Const $HEADER_NPC_TALK = 0x3F
-Global Const $HEADER_SIGNPOST_RUN = 0x57
-Global Const $HEADER_ITEM_DROP = 0x32
-Global Const $HEADER_GOLD_DROP = 0x35
-Global Const $HEADER_STOP_MAINTAIN_ENCH = 0x2F
-Global Const $HEADER_ITEM_EQUIP = 0x36
-Global Const $HEADER_ITEM_PICKUP = 0x45
-Global Const $HEADER_ITEM_DESTROY = 0x6F
-Global Const $HEADER_ITEM_ID = 0x72
-Global Const $HEADER_ITEM_MOVE = 0x78
+Global Const $HEADER_ATTACK_AGENT = 0x2D
+Global Const $HEADER_CANCEL_ACTION = 0x2F
+Global Const $HEADER_GO_PLAYER = 0x3A
+Global Const $HEADER_NPC_TALK = 0x40
+Global Const $HEADER_SIGNPOST_RUN = 0x58
+Global Const $HEADER_ITEM_DROP = 0x33
+Global Const $HEADER_GOLD_DROP = 0x36
+Global Const $HEADER_STOP_MAINTAIN_ENCH = 0x30
+Global Const $HEADER_ITEM_EQUIP = 0x37
+Global Const $HEADER_ITEM_PICKUP = 0x46
+Global Const $HEADER_ITEM_DESTROY = 0x70
+Global Const $HEADER_ITEM_ID = 0x73
+Global Const $HEADER_ITEM_MOVE = 0x79
 Global Const $HEADER_ITEMS_ACCEPT_UNCLAIMED = 0x77
 Global Const $HEADER_SALVAGE_MATS = 0x7F
 Global Const $HEADER_SALVAGE_MODS = 0x81
-Global Const $HEADER_ITEM_USE = 0x84
+Global Const $HEADER_ITEM_USE = 0x85
 Global Const $HEADER_UPGRADE = 0x84
 Global Const $HEADER_UPGRADE_ARMOR_1 = 0x81
 Global Const $HEADER_UPGRADE_ARMOR_2 = 0x84
-Global Const $HEADER_TRADE_PLAYER = 0x4F
+Global Const $HEADER_TRADE_PLAYER = 0x50
 Global Const $HEADER_TRADE_OFFER_ITEM = 0x02
 Global Const $HEADER_TRADE_SUBMIT_OFFER = 0x03
 Global Const $HEADER_TRADE_CHANGE_OFFER = 0x06
 Global Const $HEADER_TRADE_CANCEL = 0x01
 Global Const $HEADER_TRADE_ACCEPT = 0x07
-Global Const $HEADER_MAP_TRAVEL = 0xB8
-Global Const $HEADER_GUILDHALL_TRAVEL = 0xB7
-Global Const $HEADER_GUILDHALL_LEAVE = 0xB9
-Global Const $HEADER_OPEN_GB_WINDOW = 0x9F
-Global Const $HEADER_CLOSE_GB_WINDOW = 0xA0
-Global Const $HEADER_START_RATING_GVG = 0xA9
-Global Const $HEADER_FACTION_DONATE = 0x3B
-Global Const $HEADER_TITLE_DISPLAY = 0x5E
-Global Const $HEADER_TITLE_CLEAR = 0x5F
-Global Const $HEADER_DIALOG = 0x41
-Global Const $HEADER_CINEMATIC_SKIP = 0x69
-Global Const $HEADER_SET_SKILLBAR_SKILL = 0x62
-Global Const $HEADER_LOAD_SKILLBAR = 0x63
-Global Const $HEADER_CHANGE_SECONDARY = 0x47
+Global Const $HEADER_MAP_TRAVEL = 0xB9
+Global Const $HEADER_GUILDHALL_TRAVEL = 0xB8
+Global Const $HEADER_GUILDHALL_LEAVE = 0xBA
+Global Const $HEADER_OPEN_GB_WINDOW = 0xA0
+Global Const $HEADER_CLOSE_GB_WINDOW = 0xA1
+Global Const $HEADER_START_RATING_GVG = 0xAC
+Global Const $HEADER_FACTION_DONATE = 0x3C
+Global Const $HEADER_TITLE_DISPLAY = 0x5F
+Global Const $HEADER_TITLE_CLEAR = 0x60
+Global Const $HEADER_DIALOG = 0x42
+Global Const $HEADER_CINEMATIC_SKIP = 0x6A
+Global Const $HEADER_SET_SKILLBAR_SKILL = 0x63
+Global Const $HEADER_LOAD_SKILLBAR = 0x64
+Global Const $HEADER_CHANGE_SECONDARY = 0x48
 Global Const $HEADER_SKILL_USE_ALLY = 0x49
 Global Const $HEADER_SKILL_USE_FOE = 0x49
 Global Const $HEADER_SKILL_USE_ID = 0x49
-Global Const $HEADER_SET_ATTRIBUTES = 0x0F
-Global Const $HEADER_CHEST_OPEN = 0x59
-Global Const $HEADER_CHANGE_GOLD = 0x82
-Global Const $HEADER_MODE_SWITCH = 0xA2
-Global Const $HEADER_MISSION_ENTER = 0xAC
-Global Const $HEADER_MISSION_FOREIGN_ENTER = 0xA8
-Global Const $HEADER_OUTPOST_RETURN = 0xAE
-Global Const $HEADER_SEND_CHAT = 0x6A
-Global Const $HEADER_OPEN_SKILLS = 0x41
-Global Const $HEADER_EQUIP_BAG = 0x71
-Global Const $HEADER_USE_ITEM = 0x84
-Global Const $HEADER_USE_SKILL = 0x4C
-Global Const $HEADER_HOM_DIALOG = 0x59
-Global Const $HEADER_PROFESSION_ULOCK = 0x41
+Global Const $HEADER_SET_ATTRIBUTES = 0x10
+Global Const $HEADER_CHEST_OPEN = 0x5A
+Global Const $HEADER_CHANGE_GOLD = 0x83
+Global Const $HEADER_MODE_SWITCH = 0xA3
+Global Const $HEADER_MISSION_ENTER = 0xAD
+Global Const $HEADER_MISSION_FOREIGN_ENTER = 0xAD
+Global Const $HEADER_OUTPOST_RETURN = 0xAF
+Global Const $HEADER_SEND_CHAT = 0x6B
+Global Const $HEADER_OPEN_SKILLS = 0x42
+Global Const $HEADER_EQUIP_BAG = 0x72
+Global Const $HEADER_USE_ITEM = 0x85
+Global Const $HEADER_USE_SKILL = 0x4D
+Global Const $HEADER_HOM_DIALOG = 0x5A
+Global Const $HEADER_PROFESSION_ULOCK = 0x42
 #EndRegion Headers
 
 #Region Declarations
@@ -1576,6 +1576,16 @@ EndFunc   ;==>ZoneMap
 Func MoveMap($aMapID, $aRegion, $aDistrict, $aLanguage)
 	Return SendPacket(0x18, $HEADER_MAP_TRAVEL, $aMapID, $aRegion, $aDistrict, $aLanguage, False)
 EndFunc   ;==>MoveMap
+
+Func RndTravel($aMapID) ;Travel to a random region in the outpost
+	Local $UseDistricts = 11 ; 7=eu-only, 8=eu+int, 11=all(excluding America)
+	; Region/Language order: eu-en, eu-fr, eu-ge, eu-it, eu-sp, eu-po, eu-ru, us-en, int, asia-ko, asia-ch, asia-ja
+	Local $Region[11] = [2, 2, 2, 2, 2, 2, 2, -2, 1, 3, 4]
+	Local $Language[11] = [0, 2, 3, 4, 5, 9, 10, 0, 0, 0, 0]
+	Local $Random = Random(0, $UseDistricts - 1, 1)
+	MoveMap($aMapID, $Region[$Random], 0, $Language[$Random])
+	WaitMapLoading($aMapID)
+EndFunc   ;==>RndTravel
 
 ;~ Description: Returns to outpost after resigning/failure.
 Func ReturnToOutpost()

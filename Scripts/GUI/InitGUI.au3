@@ -2,6 +2,9 @@
 Global $idEdit_Console
 Global $idWaypoints_ListView
 Global $idsWaypoints_ListViewItems[32]
+Global $idMaps_ListView
+Global $idsMaps_ListViewItems[5]
+
 
 Func GUI_Init()
     GUICreate("Guild Wars Project", 700, 400, -1, -1)
@@ -9,8 +12,11 @@ Func GUI_Init()
 	;~ Create an edit box with no text in it
     $idEdit_Console = GUICtrlCreateEdit("", 10, 10, 200, 280)
     
-	;~ Create an listview with no text in it for Waypoints
-    $idWaypoints_ListView = GUICtrlCreateListView("Waypoints| |", 490, 10, 200, 280)
+	;~ Create an listview for Waypoints
+    $idWaypoints_ListView = GUICtrlCreateListView("Waypoints| |", 490, 10, 200, 140)
+
+	;~ Create an listview for Maps
+    $idMaps_ListView = GUICtrlCreateListView("Maps|", 490, 160, 200, 140)
 
     ;~ Create the up button
     $idForward_Btn = GUICtrlCreateButton("↑", 290, 180, 50, 50)
@@ -25,7 +31,7 @@ Func GUI_Init()
     $idRight_Btn = GUICtrlCreateButton("→", 350, 240, 50, 50)
     
     ;~ Create the attackNearest button
-    $idAttackNearest_Btn = GUICtrlCreateButton("Attack Nearest", 230, 120, 170, 50)
+    $idAttackNearest_Btn = GUICtrlCreateButton("Attack Pattern", 230, 120, 170, 50)
     
     ;~ Create the pick up loop button
     $idPickUpLoot_Btn = GUICtrlCreateButton("Pick Up Loot", 230, 60, 170, 50)
@@ -62,12 +68,17 @@ Func GUI_Init()
             
             Case $iMsg = $idPosition_Btn
                 InitGUI_LogPosition()
+                InitGUI_LogIdMap()
 
             Case $iMsg = $idAttackNearest_Btn
-                Target_AttackNearestEnemy()
+                Target_FightingPattern()
+                ;~ Logging Fight
+                File_LogFunction("Target_FightingPattern")
 
             Case $iMsg = $idPickUpLoot_Btn
-                Target_PickUpNearestLoot()
+                Target_PickUpLoot()
+                ;~ Logging Fight
+                File_LogFunction("Target_PickUpLoot")
             
             Case $iMsg = $idSkill1_Btn
                 Target_UseSkillOnTarget(1)
@@ -109,6 +120,18 @@ Func GUI_Init()
                 File_LogFunction("MoveTo", $paramsLog)
 
                 MoveTo($xPosWaypoint, $yPosWaypoint)
+
+            Case $iMsg > 0 And Array_Contains($iMsg, $idsMaps_ListViewItems)
+                $indexItem = Array_IndexOf($iMsg, $idsMaps_ListViewItems)
+                $idMap = _GUICtrlListView_GetItem($idMaps_ListView, $indexItem - 1, 0)[3]
+
+                ;~ Logging Teleport
+                Local $paramsLog[1]
+                $paramsLog[0] = $idMap
+                File_LogFunction("TravelTo", $paramsLog)
+
+                TravelTo($idMap)
+
 		EndSelect
     WEnd
 EndFunc ; Init
@@ -128,11 +151,36 @@ EndFunc ;~ InitGUI_LogIntoGUIConsole
 
 ; Description : Log the position of the player in the GUI console.
 Func InitGUI_LogPosition()
-    $currentPosition = _Move_GetPlayerPosition()
+    Local $currentPosition = _Move_GetPlayerPosition()
     InitGUI_LogIntoGUIConsole("Current Position :")
     InitGUI_LogIntoGUIConsole("X : " & $currentPosition[0])
     InitGUI_LogIntoGUIConsole("Y : " & $currentPosition[1])
-    $newWaypoints = GUICtrlCreateListViewItem(Round($currentPosition[0]) & "|" & Round($currentPosition[1]), $idWaypoints_ListView)
-    $count = _GUICtrlListView_GetItemCount($idWaypoints_ListView)
+
+    Local $newWaypoints = GUICtrlCreateListViewItem( Round($currentPosition[0]) _
+                                                   & "|" _ 
+                                                   & Round($currentPosition[1]) _
+                                                   , $idWaypoints_ListView)
+
+    Local $count = _GUICtrlListView_GetItemCount($idWaypoints_ListView)
     $idsWaypoints_ListViewItems[$count] = $newWaypoints
 EndFunc ;~ InitGUI_LogPosition
+
+; Description : Log the current map's ID.
+Func InitGUI_LogIdMap()
+    Local $currentMapID = GetMapID()
+
+    InitGUI_LogIntoGUIConsole("Current IdMap : " & $currentMapID)
+    Local $count = _GUICtrlListView_GetItemCount($idMaps_ListView)
+
+    Local $allIdMapsRecorded[$count]
+    For $i = 0 To $count - 1
+        $allIdMapsRecorded[$i] = _GUICtrlListView_GetItem($idMaps_ListView, $i)[3]
+    Next
+    Local $test = _ArrayFindAll($allIdMapsRecorded, $currentMapID) <> -1
+
+    If $test Then Return
+
+    Local $newMap = GUICtrlCreateListViewItem($currentMapID, $idMaps_ListView)
+    $count = _GUICtrlListView_GetItemCount($idMaps_ListView)
+    $idsMaps_ListViewItems[$count] = $newMap
+EndFunc ;~ InitGUI_LogIdMap
