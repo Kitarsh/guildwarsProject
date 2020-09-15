@@ -1973,8 +1973,9 @@ Func UseSkillEx($lSkill, $lTgt = -2, $aTimeout = 3000)
 	Do
 		Sleep(50)
 		If GetIsDead(-2) = 1 Then Return
+		If GetIsDead($lTgt) = 1 Then Return
 	Until (Not IsRecharged($lSkill)) Or (TimerDiff($lDeadlock) > $aTimeout)
-	Sleep($lAftercast * 1000)
+	If Not IsRecharged($lSkill) Then Sleep($lAftercast * 1000)
 EndFunc   ;==>UseSkillEx
 
 Func IsRecharged($lSkill)

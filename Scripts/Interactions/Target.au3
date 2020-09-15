@@ -14,10 +14,11 @@ Func Target_FightingPattern()
 	Local $distanceToTarget
 	TargetNearestEnemy()
 	
+	Local $lDeadlock = TimerInit()
 	Do
 		$nearestEnnemiAgentID = GetCurrentTargetID()
 		Sleep(100)
-	Until $nearestEnnemiAgentID <> 0
+	Until $nearestEnnemiAgentID <> 0 Or TimerDiff($lDeadlock) > 5000
 
 	$distanceToTarget = Target_GetDistanceToTarget()
 	If $distanceToTarget > 1500 Then Return
@@ -29,7 +30,7 @@ Func Target_FightingPattern()
 			Target_DoActionToFight()
 		WEnd
 		TargetNearestEnemy()
-		Sleep(200)
+		Sleep(100)
 		$nearestEnnemiAgentID = GetCurrentTargetID()
 		$distanceToTarget = Target_GetDistanceToTarget()
 	WEnd
@@ -100,7 +101,6 @@ Func Target_PickUpLoot()
 EndFunc   ;==>PickUpLoot
 
 Func Target_DoActionToFight()
-	Sleep(200)
 	Local $currentTargetAgent = GetCurrentTarget()
 	Local $IdSkillToUse
 	Local $targetToUse

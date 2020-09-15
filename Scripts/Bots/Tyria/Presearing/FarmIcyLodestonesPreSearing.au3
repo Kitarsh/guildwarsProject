@@ -1,0 +1,35 @@
+;~ Log file
+#include "../../../Start/Start.au3"
+Local $processId = ProcessExists("gw.exe")
+MemoryOpen($processId)
+While 1
+TravelTo(165)
+MoveTo(160, 8248)
+Move(633, 7270)
+WaitMapLoading()
+MoveTo(1500, 4824)
+Target_FightingPattern()
+Target_PickUpLoot()
+MoveTo(2976, 1419)
+Target_FightingPattern()
+Target_PickUpLoot()
+MoveTo(-2120, 4800)
+Target_FightingPattern()
+Target_PickUpLoot()
+MoveTo(-5840, -202)
+MoveTo(-5804, -3569)
+Target_FightingPattern()
+Target_PickUpLoot()
+MoveTo(-5862, -4623)
+Target_FightingPattern()
+Target_PickUpLoot()
+MoveTo(-4419, -5631)
+Target_FightingPattern()
+Target_PickUpLoot()
+MoveTo(-4864, -8793)
+Target_FightingPattern()
+Target_PickUpLoot()
+WEnd
+MemoryClose()
+$mGWProcHandle = 0
+Exit
