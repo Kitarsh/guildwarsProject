@@ -1,0 +1,70 @@
+;~ Log file
+#include "../../../Start/Start.au3"
+Local $processId = ProcessExists("gw.exe")
+MemoryOpen($processId)
+
+;~ Move to farming area
+TravelTo(148)
+MoveTo(7629, 5537)
+Move(6602, 4485)
+WaitMapLoading()
+MoveTo(6447, -1132)
+MoveTo(8047, -6585)
+MoveTo(9408, -9979)
+MoveTo(8599, -13708)
+MoveTo(5765, -15918)
+MoveTo(4065, -19755)
+Move(5000, -19755)
+WaitMapLoading()
+
+;Do the farm
+While 1
+    ;Do farm on Regent Valley
+    MoveTo(-16622, 13183)
+    Target_FightingPattern()
+    Target_PickUpLoot()
+    Target_FightingPattern()
+    Target_PickUpLoot()
+    MoveTo(-17349, 8410)
+    Target_FightingPattern()
+    Target_PickUpLoot()
+    MoveTo(-19497, 8078)
+    Target_FightingPattern()
+    Target_PickUpLoot()
+    MoveTo(-17536, 10131)
+    MoveTo(-16622, 13183)
+    MoveTo(-16136, 16983)
+    MoveTo(-15127, 16930)
+    Move(-18136, 16983)
+    WaitMapLoading()
+
+    ;Do farm on Lakeside County
+    MoveTo(5165, -16334)
+    Target_FightingPattern()
+    Target_PickUpLoot()
+    MoveTo(9231, -11129)
+    MoveTo(6526, -10929)
+    Target_FightingPattern()
+    Target_PickUpLoot()
+    MoveTo(5449, -9578)
+    Target_FightingPattern()
+    Target_PickUpLoot()
+    MoveTo(4243, -12049)
+    Target_FightingPattern()
+    Target_PickUpLoot()
+    MoveTo(2784, -12872)
+    MoveTo(2849, -13860)
+    Target_FightingPattern()
+    Target_PickUpLoot()
+    MoveTo(4243, -12049)
+    MoveTo(5449, -9578)
+    MoveTo(6526, -10929)
+    MoveTo(9231, -11129)
+    MoveTo(5165, -16334)
+    MoveTo(4065, -19755)
+    Move(5000, -19755)
+    WaitMapLoading()
+WEnd
+MemoryClose()
+$mGWProcHandle = 0
+Exit
