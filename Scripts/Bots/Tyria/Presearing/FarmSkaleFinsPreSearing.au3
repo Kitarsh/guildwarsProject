@@ -10,7 +10,7 @@ While 1
     MoveTo(20799, 3127)
     MoveTo(15778, 3195)
     MoveTo(16561, 4581)
-    Target_FightingPattern()
+    Fight_FightingPattern()
     Target_PickUpLoot()
 WEnd
 MemoryClose()

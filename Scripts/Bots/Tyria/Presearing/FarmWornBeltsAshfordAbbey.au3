@@ -9,7 +9,7 @@ Move(-11001, -6233)
 WaitMapLoading(146)
 MoveTo(-7909, -6278)
 MoveTo(-6385, -2042)
-Target_FightingPattern()
+Fight_FightingPattern()
 Target_PickUpLoot()
 WEnd
 MemoryClose()

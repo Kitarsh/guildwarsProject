@@ -9,35 +9,6 @@ Func Target_AttackNearestEnemy()
     InitGUI_LogIntoGUIConsole("Attacking !")
 EndFunc ;~ TargetNearestEnemy
 
-Func Target_FightingPattern()
-	Local $nearestEnnemiAgentID
-	Local $distanceToTarget
-	TargetNearestEnemy()
-	
-	Local $lDeadlock = TimerInit()
-	Do
-		$nearestEnnemiAgentID = GetCurrentTargetID()
-		Sleep(100)
-	Until $nearestEnnemiAgentID <> 0 Or TimerDiff($lDeadlock) > 5000
-
-	$distanceToTarget = Target_GetDistanceToTarget()
-	If $distanceToTarget > 1500 Then Return
-
-	While $distanceToTarget < 1800 and $distanceToTarget > 0
-		;~ TODO : Change ActionInteract and while by Real pattern of attack
-		Attack($nearestEnnemiAgentID)
-		While GetCurrentTargetID() <> ""
-			Target_DoActionToFight()
-		WEnd
-		TargetNearestEnemy()
-		Sleep(100)
-		$nearestEnnemiAgentID = GetCurrentTargetID()
-		$distanceToTarget = Target_GetDistanceToTarget()
-	WEnd
-	ClearTarget()
-
-EndFunc ;~ Target_FightingPattern
-
 Func Target_GetDistanceToTarget()
 	Local $nearestEnnemiAgentID = GetCurrentTargetID()
 	If $nearestEnnemiAgentID == "" Then 
@@ -86,7 +57,7 @@ Func Target_PickUpLoot()
 		;~ Adding a distance limit to pickup the item
 		ChangeTarget($i)
 		Sleep(200)
-		If Target_GetDistanceToTarget() > 2500 Then ContinueLoop
+		If Target_GetDistanceToTarget() > 3500 Then ContinueLoop
 		If Not(GetCanPickUp($aitem)) Then ContinueLoop
 		If Items_CanPickUp($aitem) Then
             PickUpItem($aitem) 
@@ -99,30 +70,3 @@ Func Target_PickUpLoot()
 		EndIf
 	Next
 EndFunc   ;==>PickUpLoot
-
-Func Target_DoActionToFight()
-	Local $currentTargetAgent = GetCurrentTarget()
-	Local $IdSkillToUse
-	Local $targetToUse
-
-	If GetHealth() < 400 And IsRecharged(4) Then 
-		$IdSkillToUse = 4
-		$targetToUse = -2
-	ElseIf GetHealth() < 350 And IsRecharged(7) Then 
-		$IdSkillToUse = 7
-		$targetToUse = -2
-	ElseIf IsRecharged(2) Then 
-		$IdSkillToUse = 2
-		$targetToUse = $currentTargetAgent
-	ElseIf IsRecharged(3) Then 
-		$IdSkillToUse = 3
-		$targetToUse = $currentTargetAgent
-	ElseIf IsRecharged(1) Then 
-		$IdSkillToUse = 1
-		$targetToUse = -2
-	Else
-		return
-	EndIf
-	
-	UseSkillEx($IdSkillToUse, $targetToUse)
-EndFunc ;~ Target_DoActionToFight

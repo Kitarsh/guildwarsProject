@@ -71,9 +71,9 @@ Func GUI_Init()
                 InitGUI_LogIdMap()
 
             Case $iMsg = $idAttackNearest_Btn
-                Target_FightingPattern()
+                Fight_FightingPattern()
                 ;~ Logging Fight
-                File_LogFunction("Target_FightingPattern")
+                File_LogFunction("Fight_FightingPattern")
 
             Case $iMsg = $idPickUpLoot_Btn
                 Target_PickUpLoot()

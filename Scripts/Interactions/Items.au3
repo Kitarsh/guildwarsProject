@@ -70,16 +70,21 @@ Func Items_CanPickUp($aitem)
 		Return True
     ElseIf Items_CheckArrayPscon($m) Then ; If is a Pcons or event item
 		Return True
+	ElseIf ($m = 955 _ ; Granit
+			Or $m = 486 _ ; Scorched Lodestones
+			Or $m = 922 _ ; Coal
+		   ) Then
+		Return True
 	ElseIf ($r == $RARITY_Green) Then
 		Return True
     ElseIf ($r = $RARITY_Gold) Then
 		Return True
 	ElseIf ($r == $RARITY_Purple) Then
-		Return True
+		Return False
 	ElseIf ($r == $RARITY_Blue) Then
-		Return True
+		Return False
 	ElseIf ($r == $RARITY_White) Then
-		Return false
+		Return False
 	Else
 		Return False
 	EndIf
