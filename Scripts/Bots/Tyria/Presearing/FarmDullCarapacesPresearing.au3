@@ -33,8 +33,8 @@ While 1
     Target_PickUpLoot()
     MoveTo(-17536, 10131)
     MoveTo(-16622, 13183)
-    MoveTo(-16136, 16983)
     MoveTo(-15127, 16930)
+    MoveTo(-16136, 16983)
     Move(-18136, 16983)
     WaitMapLoading()
 
