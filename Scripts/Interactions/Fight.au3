@@ -14,7 +14,6 @@ Func Fight_FightingPattern()
 	If $distanceToTarget > 1500 Then Return
 
 	While $distanceToTarget < 1800 and $distanceToTarget > 0
-		;~ TODO : Change ActionInteract and while by Real pattern of attack
 		Attack($nearestEnnemiAgentID)
         Local $lDeadlock = TimerInit()
         Local $maxTime = 120000

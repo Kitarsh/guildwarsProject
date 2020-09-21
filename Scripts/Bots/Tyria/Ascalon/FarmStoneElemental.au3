@@ -9,7 +9,6 @@ While 1
     Move(-4747, -65)
     WaitMapLoading()
 
-    MoveTo(-2381, 2355)
     MoveTo(-188, 3308)
     Fight_FightingPattern()
         If GetIsDead(-2) Then ContinueLoop

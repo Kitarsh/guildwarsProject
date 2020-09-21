@@ -2,6 +2,7 @@
 #include "../Helpers/GWA2.au3"
 #include "../Helpers/Array.au3"
 #include "../Helpers/File.au3"
+#include "../Helpers/Items.au3"
 
 #include "../Actions/Move.au3"
 
