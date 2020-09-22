@@ -405,7 +405,7 @@ Func Initialize($aGW, $bChangeTitle = True, $aUseStringLog = False, $aUseEventSy
 	$mLanguage = MemoryRead(GetScannedAddress('ScanMapInfo', 11)) + 0xC
 	$mRegion = $mLanguage + 4
 	$mSkillBase = MemoryRead(GetScannedAddress('ScanSkillBase', 8))
-	;$mSkillTimer = MemoryRead(GetScannedAddress('ScanSkillTimer', -3))
+	$mSkillTimer = MemoryRead(GetScannedAddress('ScanSkillTimer', -3))
 	$lTemp = GetScannedAddress('ScanBuildNumber', 0x2C)
 	$mBuildNumber = MemoryRead($lTemp + MemoryRead($lTemp) + 5)
 	$mZoomStill = GetScannedAddress("ScanZoomStill", 0x33)
@@ -436,9 +436,7 @@ Func Initialize($aGW, $bChangeTitle = True, $aUseStringLog = False, $aUseEventSy
 	$lTemp = GetScannedAddress('ScanTraderHook', -0x2F)
 	SetValue('TraderHookStart', '0x' & Hex($lTemp, 8))
 	SetValue('TraderHookReturn', '0x' & Hex($lTemp + 5, 8))
-    $lTemp = GetScannedAddress('ScanSkillTimer', 0x11)
-    SetValue('SkillTimerHookStart', '0x' & Hex($lTemp, 8))
-    SetValue('SkillTimerReturn', '0x' & Hex($lTemp + 5, 8))
+
 	$lTemp = GetScannedAddress('ScanDialogLog', -4)
 	SetValue('DialogLogStart', '0x' & Hex($lTemp, 8))
 	SetValue('DialogLogReturn', '0x' & Hex($lTemp + 5, 8))
@@ -495,7 +493,6 @@ Func Initialize($aGW, $bChangeTitle = True, $aUseStringLog = False, $aUseEventSy
 	$mTraderQuoteID = GetValue('TraderQuoteID')
 	$mTraderCostID = GetValue('TraderCostID')
 	$mTraderCostValue = GetValue('TraderCostValue')
-	$mSkillTimer = GetValue('SkillTimerValue')
 	$mDisableRendering = GetValue('DisableRendering')
 	$mAgentCopyCount = GetValue('AgentCopyCount')
 	$mAgentCopyBase = GetValue('AgentCopyBase')
@@ -580,7 +577,7 @@ Func Scan()
 	_('ScanMoveFunction:')
 	AddPattern('558BEC83EC208D45F0') ;558BEC83EC2056578BF98D4DF0
 	_('ScanPing:')
-	AddPattern('8D9B000000008B048D')
+	AddPattern('908D41248B49186A30')
 	_('ScanMapID:')
 	AddPattern('558BEC8B450885C074078B') ;B07F8D55
 	_('ScanMapLoading:')
@@ -3718,8 +3715,8 @@ EndFunc   ;==>GetEffect
 Func GetEffectTimeRemaining($aEffect)
 	If Not IsDllStruct($aEffect) Then $aEffect = GetEffect($aEffect)
 	If IsArray($aEffect) Then Return 0
-	;~ Return DllStructGetData($aEffect, 'Duration') * 1000
-	Return DllStructGetData($aEffect, 'Duration') * 1000 - (GetSkillTimer() - DllStructGetData($aEffect, 'TimeStamp'))
+	Return DllStructGetData($aEffect, 'Duration') * 1000
+;~ 	Return DllStructGetData($aEffect, 'Duration') * 1000 - (GetSkillTimer() - DllStructGetData($aEffect, 'TimeStamp'))
 EndFunc   ;==>GetEffectTimeRemaining
 
 ;~ Description: Returns the timestamp used for effects and skills (milliseconds).
@@ -4343,13 +4340,12 @@ Func ModifyMemory()
 ;~ 	CreateSkillCompleteLog()
 ;~ 	CreateChatLog()
 	CreateTraderHook()
-	CreateSkillTimerHook()
 ;~ 	CreateLoadFinished()
 	CreateStringLog()
 ;~ 	CreateStringFilter1()
 ;~ 	CreateStringFilter2()
-	CreateRenderingMod()
-	WriteDetour("RenderingMod", "RenderingModProc")
+	;~ CreateRenderingMod()
+	;~ WriteDetour("RenderingMod", "RenderingModProc")
 	CreateCommands()
 	CreateDialogHook()
 	$mMemory = MemoryRead(MemoryRead($mBase), 'ptr')
@@ -4377,7 +4373,7 @@ Func ModifyMemory()
 ;~ 	WriteDetour('TargetLogStart', 'TargetLogProc')
 	WriteDetour('TraderHookStart', 'TraderHookProc')
 ;~ 	WriteDetour('LoadFinishedStart', 'LoadFinishedProc')
-	WriteDetour('RenderingMod', 'RenderingModProc')
+	;~ WriteDetour('RenderingMod', 'RenderingModProc')
 ;~ 	WriteDetour('StringLogStart', 'StringLogProc')
 ;~ 	WriteDetour('StringFilter1Start', 'StringFilter1Proc')
 ;~ 	WriteDetour('StringFilter2Start', 'StringFilter2Proc')
@@ -4402,7 +4398,6 @@ Func CreateData()
 	_('TraderQuoteID/4')
 	_('TraderCostID/4')
 	_('TraderCostValue/4')
-	_('SkillTimerValue/4')
 	_('DisableRendering/4')
 
 	_('QueueBase/' & 256 * GetValue('QueueSize'))
@@ -4703,17 +4698,6 @@ Func CreateTraderHook()
     _('pop eax')
 	_('ljmp TraderHookReturn')
 EndFunc   ;==>CreateTraderHook
-
-;~ Description: Internal use only.
-Func CreateSkillTimerHook()
-    _('SkillTimerHookProc:')
-    _(' -> 2B C8 8B 57 0C')
-    _('push eax')
-    _('mov eax,[edi+0x14] -> 8B 47 14')
-    _('mov dword[SkillTimerValue],eax')
-    _('pop eax')
-    _('ljmp SkillTimerReturn')
- EndFunc
 
 ;~ Description: Internal use only.
 Func CreateDialogHook()
@@ -5234,11 +5218,6 @@ Func _($aASM)
 	;static values hardcoded
 	Local $lBuffer
 	Select
-		Case StringInStr($aASM, " -> ")
-			Local $split = StringSplit($aASM, " -> ", 1)
-			Local $lOpCode = StringReplace($split[2], " ", "")
-			$mASMSize += 0.5 * StringLen($lOpCode)
-			$mASMString &= $lOpCode
 		Case StringInStr($aASM, " -> ")
 			Local $split = StringSplit($aASM, " -> ", 1)
 			Local $lOpCode = StringReplace($split[2], " ", "")

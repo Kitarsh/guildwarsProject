@@ -4,6 +4,20 @@ Local $processId = ProcessExists("gw.exe")
 MemoryOpen($processId)
 While 1
     TravelTo(39)
+    
+    ; Talk To Chest
+    MoveTo(-7274, -1514)
+    GoToNPC(17)
+    
+    Gold_Store()
+    
+    ; Selling Weapons
+    MoveTo(-6985, -387)
+    GoToNPC(9)
+    Sell_WeaponsInInventory()
+
+    Gold_Store()
+
     MoveTo(-6190, -174)
     SwitchMode(1)
     Move(-4747, -65)

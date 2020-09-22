@@ -29,3 +29,10 @@ Func Merchants_BuyMat($idMat, $count)
     Next
     return $failure
 EndFunc ;  Merchants_BuyMat
+
+Func Merchants_SellItem($bag, $slot)
+    Local $lItem = GetItemBySlot($bag, $slot)
+    Local $lItemId = DllStructGetData($lItem, "ID")
+    If DllStructGetData($lItem, "ID") = 0 Then Return
+    SellItem($lItem)
+EndFunc  ; Merchants_SellItem

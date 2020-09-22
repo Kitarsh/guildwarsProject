@@ -15,6 +15,9 @@
 #include "../Interactions/Fight.au3"
 #include "../Interactions/Merchants.au3"
 
+#include "../Inventories/Sell.au3"
+#include "../Inventories/Gold.au3"
+
 ;~ Including AutoIt librairies.
 #include <ButtonConstants.au3>
 #include <ComboConstants.au3>
