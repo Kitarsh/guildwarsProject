@@ -13,6 +13,7 @@
 #include "../Interactions/Target.au3"
 #include "../Interactions/SkillsBar.au3"
 #include "../Interactions/Fight.au3"
+#include "../Interactions/Merchants.au3"
 
 ;~ Including AutoIt librairies.
 #include <ButtonConstants.au3>

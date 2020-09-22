@@ -6,82 +6,121 @@ If @AutoItX64 Then
 	Exit
 EndIf
 
-#Region Headers
-;=QUEST=+
-Global Const $HEADER_QUEST_ACCEPT = 0x42
-Global Const $HEADER_QUEST_REWARD = 0x42
-Global Const $HEADER_QUEST_ABANDON = 0x12
-Global Const $HEADER_HERO_AGGRESSION  = 0x17
-Global Const $HEADER_HERO_LOCK = 0x1A
-Global Const $HEADER_HERO_TOGGLE_SKILL = 0x1A
-Global Const $HEADER_HERO_CLEAR_FLAG = 0x1A
-Global Const $HEADER_HERO_PLACE_FLAG = 0x1A
-Global Const $HEADER_HERO_ADD = 0x21
-Global Const $HEADER_HERO_KICK = 0x22
-Global Const $HEADER_HEROES_KICK = 0x22
-Global Const $HEADER_PARTY_PLACE_FLAG = 0x1E
-Global Const $HEADER_PARTY_CLEAR_FLAG = 0x1E
-Global Const $HEADER_HENCHMAN_ADD = 0xA7
-Global Const $HEADER_PARTY_LEAVE = 0xAA
-Global Const $HEADER_HENCHMAN_KICK = 0xB0
-Global Const $HEADER_CALL_TARGET = 0x28
-Global Const $HEADER_ATTACK_AGENT = 0x2D
-Global Const $HEADER_CANCEL_ACTION = 0x2F
-Global Const $HEADER_GO_PLAYER = 0x3A
-Global Const $HEADER_NPC_TALK = 0x40
-Global Const $HEADER_SIGNPOST_RUN = 0x58
-Global Const $HEADER_ITEM_DROP = 0x33
-Global Const $HEADER_GOLD_DROP = 0x36
-Global Const $HEADER_STOP_MAINTAIN_ENCH = 0x30
-Global Const $HEADER_ITEM_EQUIP = 0x37
-Global Const $HEADER_ITEM_PICKUP = 0x46
-Global Const $HEADER_ITEM_DESTROY = 0x70
-Global Const $HEADER_ITEM_ID = 0x73
-Global Const $HEADER_ITEM_MOVE = 0x79
-Global Const $HEADER_ITEMS_ACCEPT_UNCLAIMED = 0x77
-Global Const $HEADER_SALVAGE_MATS = 0x7F
-Global Const $HEADER_SALVAGE_MODS = 0x81
-Global Const $HEADER_ITEM_USE = 0x85
-Global Const $HEADER_UPGRADE = 0x84
-Global Const $HEADER_UPGRADE_ARMOR_1 = 0x81
-Global Const $HEADER_UPGRADE_ARMOR_2 = 0x84
-Global Const $HEADER_TRADE_PLAYER = 0x50
-Global Const $HEADER_TRADE_OFFER_ITEM = 0x02
-Global Const $HEADER_TRADE_SUBMIT_OFFER = 0x03
-Global Const $HEADER_TRADE_CHANGE_OFFER = 0x06
-Global Const $HEADER_TRADE_CANCEL = 0x01
-Global Const $HEADER_TRADE_ACCEPT = 0x07
-Global Const $HEADER_MAP_TRAVEL = 0xB9
-Global Const $HEADER_GUILDHALL_TRAVEL = 0xB8
-Global Const $HEADER_GUILDHALL_LEAVE = 0xBA
-Global Const $HEADER_OPEN_GB_WINDOW = 0xA0
-Global Const $HEADER_CLOSE_GB_WINDOW = 0xA1
-Global Const $HEADER_START_RATING_GVG = 0xAC
-Global Const $HEADER_FACTION_DONATE = 0x3C
-Global Const $HEADER_TITLE_DISPLAY = 0x5F
-Global Const $HEADER_TITLE_CLEAR = 0x60
-Global Const $HEADER_DIALOG = 0x42
-Global Const $HEADER_CINEMATIC_SKIP = 0x6A
-Global Const $HEADER_SET_SKILLBAR_SKILL = 0x63
-Global Const $HEADER_LOAD_SKILLBAR = 0x64
-Global Const $HEADER_CHANGE_SECONDARY = 0x48
-Global Const $HEADER_SKILL_USE_ALLY = 0x49
-Global Const $HEADER_SKILL_USE_FOE = 0x49
-Global Const $HEADER_SKILL_USE_ID = 0x49
-Global Const $HEADER_SET_ATTRIBUTES = 0x10
-Global Const $HEADER_CHEST_OPEN = 0x5A
-Global Const $HEADER_CHANGE_GOLD = 0x83
-Global Const $HEADER_MODE_SWITCH = 0xA3
-Global Const $HEADER_MISSION_ENTER = 0xAD
-Global Const $HEADER_MISSION_FOREIGN_ENTER = 0xAD
-Global Const $HEADER_OUTPOST_RETURN = 0xAF
-Global Const $HEADER_SEND_CHAT = 0x6B
-Global Const $HEADER_OPEN_SKILLS = 0x42
-Global Const $HEADER_EQUIP_BAG = 0x72
-Global Const $HEADER_USE_ITEM = 0x85
-Global Const $HEADER_USE_SKILL = 0x4D
-Global Const $HEADER_HOM_DIALOG = 0x5A
-Global Const $HEADER_PROFESSION_ULOCK = 0x42
+;=QUEST=
+Global Const $HEADER_QUEST_ACCEPT				= 0x42	;Accepts a quest from the NPC
+Global Const $HEADER_QUEST_REWARD				= 0x42	;Retrieves Quest reward from NPC
+Global Const $HEADER_QUEST_ABANDON				= 0x13	 ;Abandons the quest
+
+;=HERO=
+Global Const $HEADER_HERO_AGGRESSION			= 0x18	;Sets the heroes aggression level
+Global Const $HEADER_HERO_LOCK					= 0x1A	;Locks the heroes target
+Global Const $HEADER_HERO_TOGGLE_SKILL			= 0x1B	;Enables or disables the heroes skill
+Global Const $HEADER_HERO_CLEAR_FLAG			= 0x1D	;Clears the heroes position flag
+Global Const $HEADER_HERO_PLACE_FLAG			= 0x1D	;Sets the heroes position flag, hero runs to position
+Global Const $HEADER_HERO_ADD					= 0x21	;Adds hero to party
+Global Const $HEADER_HERO_KICK					= 0x22	;Kicks hero from party
+Global Const $HEADER_HEROES_KICK				= 0x22	;Kicks ALL heroes from party
+
+;=PARTY=
+Global Const $HEADER_PARTY_PLACE_FLAG			= 0x1E	;Sets the party position flag, all party-npcs runs to position
+Global Const $HEADER_PARTY_CLEAR_FLAG			= 0x1E	;Clears the party position flag
+Global Const $HEADER_HENCHMAN_ADD				= 0xA7	;Adds henchman to party
+Global Const $HEADER_PARTY_LEAVE				= 0xAA	;Leaves the party
+Global Const $HEADER_HENCHMAN_KICK				= 0x80	;Kicks a henchman from party
+Global Const $HEADER_INVITE_TARGET				= 0xA6	;Invite target player to party
+Global Const $HEADER_INVITE_CANCEL				= 0xA3	;Cancel invitation of player
+Global Const $HEADER_INVITE_ACCEPT				= 0xA2	;Accept invitation to party
+
+;=TARGET (Enemies or NPC)=
+Global Const $HEADER_CALL_TARGET				= 0x26	;Calls the target without attacking (Ctrl+Shift+Space)
+Global Const $HEADER_ATTACK_AGENT				= 0x2D	;Attacks agent (Space IIRC)
+Global Const $HEADER_CANCEL_ACTION				= 0x2F	;Cancels the current action
+Global Const $HEADER_AGENT_FOLLOW				= 0x39	;Follows the agent/npc. Ctrl+Click triggers "I am following Person" in chat
+Global Const $HEADER_NPC_TALK					= 0x40	;talks/goes to npc
+Global Const $HEADER_SIGNPOST_RUN				= 0x58	;Runs to signpost
+
+;=DROP=
+Global Const $HEADER_ITEM_DROP					= 0x33	;Drops item from inventory to ground
+Global Const $HEADER_GOLD_DROP					= 0x36	;Drops gold from inventory to ground
+
+;=BUFFS=
+Global Const $HEADER_STOP_MAINTAIN_ENCH			= 0x30	;Drops buff, cancel enchantmant, whatever you call it
+
+;=ITEMS=
+Global Const $HEADER_ITEM_EQUIP					= 0x37	;Equips item from inventory/chest/no idea
+Global Const $HEADER_ITEM_PICKUP				= 0x46	;Picks up an item from ground
+Global Const $HEADER_ITEM_DESTROY				= 0x70	 ;Destroys the item
+Global Const $HEADER_ITEM_ID					= 0x73	;Identifies item in inventory
+Global Const $HEADER_ITEM_MOVE					= 0x79	;Moves item in inventory
+Global Const $HEADER_ITEMS_ACCEPT_UNCLAIMED		= 0x7A	;Accepts ITEMS not picked up in missions
+Global Const $HEADER_ITEM_MOVE_EX				= 0x7A	;Moves an item, with amount to be moved.
+Global Const $HEADER_SALVAGE_MATS				= 0x81	;Salvages materials from item
+Global Const $HEADER_SALVAGE_MODS				= 0x82	;Salvages mods from item
+Global Const $HEADER_ITEM_USE					= 0x85	;Uses item from inventory/chest
+Global Const $HEADER_ITEM_UNEQUIP				= 0x55	;Unequip item
+Global Const $HEADER_UPGRADE					= 0x85	;used by gwapi. is it even useful? NOT TESTED
+Global Const $HEADER_UPGRADE_ARMOR_1			= 0x85	;used by gwapi. is it even useful? NOT TESTED
+Global Const $HEADER_UPGRADE_ARMOR_2			= 0x88	;used by gwapi. is it even useful? NOT TESTED
+
+;=TRADE=
+Global Const $HEADER_TRADE_PLAYER				= 0x50	;Send trade request to player
+Global Const $HEADER_TRADE_OFFER_ITEM			= 0x02	;Add item to trade window
+Global Const $HEADER_TRADE_SUBMIT_OFFER			= 0x03	;Submit offer
+Global Const $HEADER_TRADE_CHANGE_OFFER			= 0x06	;Change offer
+Global Const $HEADER_TRADE_CANCEL				= 0x01	;Cancel trade
+Global Const $HEADER_TRADE_ACCEPT				= 0x07	;Accept trade
+
+;=TRAVEL=
+Global Const $HEADER_MAP_TRAVEL					= 0xB9	;Travels to outpost via worldmap
+Global Const $HEADER_GUILDHALL_TRAVEL			= 0xB8	;Travels to guild hall
+Global Const $HEADER_GUILDHALL_LEAVE			= 0xBA	;Leaves Guildhall
+
+;=FACTION=
+Global Const $HEADER_FACTION_DONATE				= 0x3C	;Donates kurzick/luxon faction to ally
+
+;=TITLE=
+Global Const $HEADER_TITLE_DISPLAY				= 0x5F	;Displays title (from Gigis Vaettir Bot)
+Global Const $HEADER_TITLE_CLEAR				= 0x60	;Hides title (from Gigis Vaettir Bot)
+
+;=DIALOG=
+Global Const $HEADER_DIALOG						= 0x42	;Sends a dialog to NPC
+Global Const $HEADER_CINEMATIC_SKIP				= 0x6A	;Skips the cinematic
+
+;=SKILL / BUILD=
+Global Const $HEADER_SET_SKILLBAR_SKILL			= 0x63	;Changes a skill on the skillbar
+Global Const $HEADER_LOAD_SKILLBAR				= 0x64	;Loads a complete skillbar
+Global Const $HEADER_CHANGE_SECONDARY			= 0x48	;Changes Secondary class (from Build window, not class changer)
+Global Const $HEADER_SKILL_USE_ALLY				= 0x4D	;used by gwapi. appears to have changed
+Global Const $HEADER_SKILL_USE_FOE				= 0x4D	;used by gwapi. appears to have changed
+Global Const $HEADER_SKILL_USE_ID				= 0x4D	;
+Global Const $HEADER_USE_SKILL					= 0x4D
+Global Const $HEADER_SET_ATTRIBUTES				= 0x11	;hidden in init stuff like sendchat
+Global Const $HEADER_OPEN_SKILLS				= 0x42
+
+;=CHEST=
+Global Const $HEADER_CHEST_OPEN					= 0x5A	;Opens a chest (with key AFAIK)
+Global Const $HEADER_CHANGE_GOLD				= 0x83	;Moves Gold (from chest to inventory, and otherway around IIRC)
+
+;=MISSION=
+Global Const $HEADER_MODE_SWITCH				= 0xA3	;Toggles hard- and normal mode
+Global Const $HEADER_MISSION_ENTER				= 0xAD	;Enter a mission/challenge
+Global Const $HEADER_MISSION_FOREIGN_ENTER		= 0xAD	;Enters a foreign mission/challenge (no idea honestly)
+Global Const $HEADER_OUTPOST_RETURN				= 0xAF	;Returns to outpost after /resign
+
+;=CHAT=
+Global Const $HEADER_SEND_CHAT					= 0x6B	;Needed for sending messages in chat
+
+;=OTHER CONSTANTS=
+Global Const $HEADER_MAX_ATTRIBUTES_CONST_5		= 0x04	;constant at word 5 of max attrib packet. Changed from 3 to four in most recent update
+Global Const $HEADER_MAX_ATTRIBUTES_CONST_22	= 0x04	;constant at word 22 of max attrib packet. Changed from 3 to four in most recent update
+Global Const $HEADER_GO_PLAYER					= 0x3A
+Global Const $HEADER_OPEN_GB_WINDOW				= 0xA0
+Global Const $HEADER_CLOSE_GB_WINDOW			= 0xA1
+Global Const $HEADER_START_RATING_GVG			= 0xAA
+Global Const $HEADER_EQUIP_BAG					= 0x37
+Global Const $HEADER_HOM_DIALOG					= 0x5A
+Global Const $HEADER_PROFESSION_ULOCK			= 0x42
+
 #EndRegion Headers
 
 #Region Declarations
@@ -359,14 +398,14 @@ Func Initialize($aGW, $bChangeTitle = True, $aUseStringLog = False, $aUseEventSy
 	SetValue('MyID', '0x' & Hex($mMyID, 8))
 	$mCurrentTarget = MemoryRead(GetScannedAddress('ScanCurrentTarget', -14)) ;$mAgentBase - 1280
 	SetValue('PacketLocation', '0x' & Hex(MemoryRead(GetScannedAddress('ScanBaseOffset', 11)), 8))
-	$mPing = MemoryRead(GetScannedAddress('ScanPing', -8))
+	$mPing = MemoryRead(GetScannedAddress('ScanPing', 10))
 	$mMapID = MemoryRead(GetScannedAddress('ScanMapID', 28))
 	$mMapLoading = MemoryRead(GetScannedAddress('ScanMapLoading', 44))
 	$mLoggedIn = MemoryRead(GetScannedAddress('ScanLoggedIn', -3)) - 0x198
 	$mLanguage = MemoryRead(GetScannedAddress('ScanMapInfo', 11)) + 0xC
 	$mRegion = $mLanguage + 4
 	$mSkillBase = MemoryRead(GetScannedAddress('ScanSkillBase', 8))
-	$mSkillTimer = MemoryRead(GetScannedAddress('ScanSkillTimer', -3))
+	;$mSkillTimer = MemoryRead(GetScannedAddress('ScanSkillTimer', -3))
 	$lTemp = GetScannedAddress('ScanBuildNumber', 0x2C)
 	$mBuildNumber = MemoryRead($lTemp + MemoryRead($lTemp) + 5)
 	$mZoomStill = GetScannedAddress("ScanZoomStill", 0x33)
@@ -377,8 +416,8 @@ Func Initialize($aGW, $bChangeTitle = True, $aUseStringLog = False, $aUseEventSy
 	SetValue('MainStart', '0x' & Hex($lTemp, 8))
 	SetValue('MainReturn', '0x' & Hex($lTemp + 5, 8))
 	$lTemp = GetScannedAddress('ScanRenderFunc', -0x67)
-    SetValue('RenderingMod', '0x' & Hex($lTemp, 8))
-    SetValue('RenderingModReturn', '0x' & Hex($lTemp + 10, 8))
+    SetValue("RenderingMod", "0x" & Hex($lTemp, 8))
+    SetValue("RenderingModReturn", "0x" & Hex($lTemp + 10, 8))
 	$lTemp = GetScannedAddress('ScanTargetLog', 1)
 	SetValue('TargetLogStart', '0x' & Hex($lTemp, 8))
 	SetValue('TargetLogReturn', '0x' & Hex($lTemp + 5, 8))
@@ -394,10 +433,12 @@ Func Initialize($aGW, $bChangeTitle = True, $aUseStringLog = False, $aUseEventSy
 	$lTemp = GetScannedAddress('ScanChatLog', 18)
 	SetValue('ChatLogStart', '0x' & Hex($lTemp, 8))
 	SetValue('ChatLogReturn', '0x' & Hex($lTemp + 6, 8))
-	$lTemp = GetScannedAddress('ScanTraderHook', -7)
+	$lTemp = GetScannedAddress('ScanTraderHook', -0x2F)
 	SetValue('TraderHookStart', '0x' & Hex($lTemp, 8))
 	SetValue('TraderHookReturn', '0x' & Hex($lTemp + 5, 8))
-
+    $lTemp = GetScannedAddress('ScanSkillTimer', 0x11)
+    SetValue('SkillTimerHookStart', '0x' & Hex($lTemp, 8))
+    SetValue('SkillTimerReturn', '0x' & Hex($lTemp + 5, 8))
 	$lTemp = GetScannedAddress('ScanDialogLog', -4)
 	SetValue('DialogLogStart', '0x' & Hex($lTemp, 8))
 	SetValue('DialogLogReturn', '0x' & Hex($lTemp + 5, 8))
@@ -414,7 +455,7 @@ Func Initialize($aGW, $bChangeTitle = True, $aUseStringLog = False, $aUseEventSy
 
 	SetValue('PostMessage', '0x' & Hex(MemoryRead(GetScannedAddress('ScanPostMessage', 11)), 8))
 	SetValue('Sleep', MemoryRead(MemoryRead(GetValue('ScanSleep') + 8) + 3))
-	SetValue('SalvageFunction', MemoryRead(GetValue('ScanSalvageFunction') + 8) - 18)
+	SetValue('SalvageFunction', '0x' & Hex(GetScannedAddress('ScanSalvageFunction', -10), 8))
 	SetValue('SalvageGlobal', MemoryRead(MemoryRead(GetValue('ScanSalvageGlobal') + 8) + 1))
 	SetValue('IncreaseAttributeFunction', '0x' & Hex(GetScannedAddress('ScanIncreaseAttributeFunction', -0x5A), 8))
 	SetValue("DecreaseAttributeFunction", "0x" & Hex(GetScannedAddress("ScanDecreaseAttributeFunction", 25), 8))
@@ -426,11 +467,11 @@ Func Initialize($aGW, $bChangeTitle = True, $aUseStringLog = False, $aUseEventSy
 	SetValue('PacketSendFunction', '0x' & Hex(GetScannedAddress('ScanPacketSendFunction', -0xC2), 8))
 	SetValue('ActionBase', '0x' & Hex(MemoryRead(GetScannedAddress('ScanActionBase', -3)), 8))
 	SetValue('ActionFunction', '0x' & Hex(GetScannedAddress('ScanActionFunction', -3), 8))
-	SetValue('UseHeroSkillFunction', '0x' & Hex(GetScannedAddress('ScanUseHeroSkillFunction', -0xA1), 8))
+	SetValue('UseHeroSkillFunction', '0x' & Hex(GetScannedAddress('ScanUseHeroSkillFunction', -0x59), 8))
 	SetValue('BuyItemBase', '0x' & Hex(MemoryRead(GetScannedAddress('ScanBuyItemBase', 15)), 8))
 	SetValue('TransactionFunction', '0x' & Hex(GetScannedAddress('ScanTransactionFunction', -0x7E), 8))
-	SetValue('RequestQuoteFunction', '0x' & Hex(GetScannedAddress('ScanRequestQuoteFunction', -0x34), 8)) ;-2
-	SetValue('TraderFunction', '0x' & Hex(GetScannedAddress('ScanTraderFunction', -71), 8))
+	SetValue('RequestQuoteFunction', '0x' & Hex(GetScannedAddress('ScanRequestQuoteFunction', 0x3B), 8)) ;-2
+	SetValue('TraderFunction', '0x' & Hex(GetScannedAddress('ScanTraderFunction', -0x1E), 8))
 	SetValue('ClickToMoveFix', '0x' & Hex(GetScannedAddress("ScanClickToMoveFix", 1), 8))
 	SetValue('ChangeStatusFunction', '0x' & Hex(GetScannedAddress("ScanChangeStatusFunction", 1), 8))
 
@@ -454,6 +495,7 @@ Func Initialize($aGW, $bChangeTitle = True, $aUseStringLog = False, $aUseEventSy
 	$mTraderQuoteID = GetValue('TraderQuoteID')
 	$mTraderCostID = GetValue('TraderCostID')
 	$mTraderCostValue = GetValue('TraderCostValue')
+	$mSkillTimer = GetValue('SkillTimerValue')
 	$mDisableRendering = GetValue('DisableRendering')
 	$mAgentCopyCount = GetValue('AgentCopyCount')
 	$mAgentCopyBase = GetValue('AgentCopyBase')
@@ -538,7 +580,7 @@ Func Scan()
 	_('ScanMoveFunction:')
 	AddPattern('558BEC83EC208D45F0') ;558BEC83EC2056578BF98D4DF0
 	_('ScanPing:')
-	AddPattern('908D41248B49186A30')
+	AddPattern('8D9B000000008B048D')
 	_('ScanMapID:')
 	AddPattern('558BEC8B450885C074078B') ;B07F8D55
 	_('ScanMapLoading:')
@@ -578,21 +620,21 @@ Func Scan()
 	_('ScanSkillBase:')
 	AddPattern('8D04B6C1E00505')
 	_('ScanUseHeroSkillFunction:')
-	AddPattern('8D0C765F5E8B')
+	AddPattern('BA02000000B954080000')
 	_('ScanTransactionFunction:')
 	AddPattern('85FF741D8B4D14EB08') ;558BEC81ECC000000053568B75085783FE108BFA8BD97614
 	_('ScanBuyItemBase:')
 	AddPattern('D9EED9580CC74004')
 	_('ScanRequestQuoteFunction:')
-	AddPattern('8B752083FE107614') ;53568B750C5783FE10
+	AddPattern('83C4245B8BE55D')
 	_('ScanTraderFunction:')
-	AddPattern('8B45188B551085')
+	AddPattern('83FF10761468AC210000')
 	_('ScanTraderHook:')
-	AddPattern('8955FC6A008D55F8B9BB') ;007BA579
+	AddPattern('50516A466A06') ;007BA579
 	_('ScanSleep:')
 	AddPattern('5F5E5B741A6860EA0000')
 	_('ScanSalvageFunction:')
-	AddPattern('8BFA8BD9897DF0895DF4')
+	AddPattern('33C58945FC8B45088945F08B450C8945F48B45108945F88D45EC506A10C745EC7E')
 	_('ScanSalvageGlobal:')
 	AddPattern('8B018B4904A3')
 	_('ScanIncreaseAttributeFunction:')
@@ -3676,8 +3718,8 @@ EndFunc   ;==>GetEffect
 Func GetEffectTimeRemaining($aEffect)
 	If Not IsDllStruct($aEffect) Then $aEffect = GetEffect($aEffect)
 	If IsArray($aEffect) Then Return 0
-	Return DllStructGetData($aEffect, 'Duration') * 1000
-;~ 	Return DllStructGetData($aEffect, 'Duration') * 1000 - (GetSkillTimer() - DllStructGetData($aEffect, 'TimeStamp'))
+	;~ Return DllStructGetData($aEffect, 'Duration') * 1000
+	Return DllStructGetData($aEffect, 'Duration') * 1000 - (GetSkillTimer() - DllStructGetData($aEffect, 'TimeStamp'))
 EndFunc   ;==>GetEffectTimeRemaining
 
 ;~ Description: Returns the timestamp used for effects and skills (milliseconds).
@@ -4301,11 +4343,13 @@ Func ModifyMemory()
 ;~ 	CreateSkillCompleteLog()
 ;~ 	CreateChatLog()
 	CreateTraderHook()
+	CreateSkillTimerHook()
 ;~ 	CreateLoadFinished()
 	CreateStringLog()
 ;~ 	CreateStringFilter1()
 ;~ 	CreateStringFilter2()
 	CreateRenderingMod()
+	WriteDetour("RenderingMod", "RenderingModProc")
 	CreateCommands()
 	CreateDialogHook()
 	$mMemory = MemoryRead(MemoryRead($mBase), 'ptr')
@@ -4358,6 +4402,7 @@ Func CreateData()
 	_('TraderQuoteID/4')
 	_('TraderCostID/4')
 	_('TraderCostValue/4')
+	_('SkillTimerValue/4')
 	_('DisableRendering/4')
 
 	_('QueueBase/' & 256 * GetValue('QueueSize'))
@@ -4637,9 +4682,17 @@ EndFunc   ;==>CreateChatLog
 ;~ Description: Internal use only.
 Func CreateTraderHook()
 	_('TraderHookProc:')
-	_('mov dword[TraderCostID],ecx')
-	_('mov dword[TraderCostValue],edx')
-	_('push eax')
+    _('push eax')
+	_('mov eax,dword[ebx+28] -> 8b 43 28')
+	_('mov eax,[eax] -> 8b 00')
+	_('mov dword[TraderCostID],eax')
+	_('mov eax,dword[ebx+28] -> 8b 43 28')
+	_('mov eax,[eax+4] -> 8b 40 04')
+	_('mov dword[TraderCostValue],eax')
+    _('pop eax')
+	_('mov ebx,dword[ebp+C] -> 8B 5D 0C') ; Original bytes
+	_('mov esi,eax') ; Original bytes
+    _('push eax')
 	_('mov eax,dword[TraderQuoteID]')
 	_('inc eax')
 	_('cmp eax,200')
@@ -4647,11 +4700,20 @@ Func CreateTraderHook()
 	_('xor eax,eax')
 	_('TraderSkipReset:')
 	_('mov dword[TraderQuoteID],eax')
-	_('pop eax')
-	_('mov ebp,esp')
-	_('sub esp,8')
+    _('pop eax')
 	_('ljmp TraderHookReturn')
 EndFunc   ;==>CreateTraderHook
+
+;~ Description: Internal use only.
+Func CreateSkillTimerHook()
+    _('SkillTimerHookProc:')
+    _(' -> 2B C8 8B 57 0C')
+    _('push eax')
+    _('mov eax,[edi+0x14] -> 8B 47 14')
+    _('mov dword[SkillTimerValue],eax')
+    _('pop eax')
+    _('ljmp SkillTimerReturn')
+ EndFunc
 
 ;~ Description: Internal use only.
 Func CreateDialogHook()
@@ -4778,29 +4840,10 @@ EndFunc   ;==>CreateStringFilter2
 
 ;~ Description: Internal use only.
 Func CreateRenderingMod()
-;~ 	_('RenderingModProc:')
-;~ 	_('cmp dword[DisableRendering],1')
-;~ 	_('jz RenderingModSkipCompare')
-;~ 	_('cmp eax,ebx')
-;~ 	_('ljne RenderingModReturn')
-;~ 	_('RenderingModSkipCompare:')
-
-;~ 	$mASMSize += 17
-;~ 	$mASMString &= StringTrimLeft(MemoryRead(GetValue("RenderingMod") + 4, "byte[17]"), 2)
-
-;~ 	_('cmp dword[DisableRendering],1')
-;~ 	_('jz DisableRenderingProc')
-;~ 	_('retn')
-
-;~ 	_('DisableRenderingProc:')
-;~ 	_('push 1')
-;~ 	_('call dword[Sleep]')
-;~ 	_('retn')
-
-   _("RenderingModProc:")
-   _("add esp,4")
-   _("cmp dword[DisableRendering],1")
-   _("ljmp RenderingModReturn")
+	_("RenderingModProc:")
+	_("add esp,4")
+	_("cmp dword[DisableRendering],1")
+	_("ljmp RenderingModReturn")
 EndFunc   ;==>CreateRenderingMod
 
 ;~ Description: Internal use only.
@@ -4971,13 +5014,16 @@ Func CreateCommands()
 ;~ 	_('pop ecx')
 ;~ 	_('ljmp CommandReturn')
 
-;~ 	_('CommandUseHeroSkill:')
-;~ 	_('mov ecx,dword[eax+4]')
-;~ 	_('mov edx,dword[eax+c]')
-;~ 	_('mov eax,dword[eax+8]')
-;~ 	_('push eax')
-;~ 	_('call UseHeroSkillFunction')
-;~ 	_('ljmp CommandReturn')
+	_('CommandUseHeroSkill:')
+	_('mov ecx,dword[eax+8]')
+	_('push ecx')
+	_('mov ecx,dword[eax+c]')
+	_('push ecx')
+	_('mov ecx,dword[eax+4]')
+	_('push ecx')
+	_('call UseHeroSkillFunction')
+	_('add esp,C')
+	_('ljmp CommandReturn')
 
 	_('CommandSendChat:')
 	_('lea edx,dword[eax+4]')
@@ -5005,25 +5051,28 @@ Func CreateCommands()
 	_('push 0')
 	_('push 0')
 	_('push C')
-	_('xor edx,edx')
+	_('mov ecx,0')
+	_('mov edx,2')
 	_('call RequestQuoteFunction')
 	_('add esp,20')
 	_('ljmp CommandReturn')
 
-;~ 	_('CommandRequestQuoteSell:')
-;~ 	_('mov dword[TraderCostID],0')
-;~ 	_('mov dword[TraderCostValue],0')
-;~ 	_('push 0')
-;~ 	_('push 0')
-;~ 	_('push 0')
-;~ 	_('add eax,4')
-;~ 	_('push eax')
-;~ 	_('push 1')
-;~ 	_('push 0')
-;~ 	_('mov ecx,d')
-;~ 	_('xor edx,edx')
-;~ 	_('call RequestQuoteFunction')
-;~ 	_('ljmp CommandReturn')
+	_('CommandRequestQuoteSell:')
+	_('mov dword[TraderCostID],0')
+	_('mov dword[TraderCostValue],0')
+	_('push 0')
+	_('push 0')
+	_('push 0')
+	_('add eax,4')
+	_('push eax')
+	_('push 1')
+	_('push 0')
+	_('push 0')
+	_('push D')
+	_('xor edx,edx')
+	_('call RequestQuoteFunction')
+	_('add esp,20')
+	_('ljmp CommandReturn')
 
 	_('CommandTraderBuy:')
 	_('push 0')
@@ -5033,12 +5082,33 @@ Func CreateCommands()
 	_('push 0')
 	_('push 0')
 	_('push 0')
-	_('mov ecx,c')
 	_('mov edx,dword[TraderCostValue]')
+	_('push edx')
+	_('push c')
 	_('call TraderFunction')
+	_('add esp,24')
 	_('mov dword[TraderCostID],0')
 	_('mov dword[TraderCostValue],0')
 	_('ljmp CommandReturn')
+
+ 	_('CommandTraderSell:')
+	_('push 0')
+	_('push 0')
+	_('push 0')
+	_('push dword[TraderCostValue]')
+	_('push 0')
+	_('push TraderCostID')
+	_('push 1')
+	_('push 0')
+	_('push D')
+	_('mov ecx,d')
+	_('xor edx,edx')
+	_('call TraderFunction')
+	_('add esp,24')
+	_('mov dword[TraderCostID],0')
+	_('mov dword[TraderCostValue],0')
+	_('ljmp CommandReturn')
+
 
 	_('mov esi,eax')
 	_('add esi,10') ;01239A20
@@ -5060,33 +5130,28 @@ Func CreateCommands()
 	_('add esp,24')
 	_('ljmp CommandReturn')
 
-;~ 	_('CommandTraderSell:')
-;~ 	_('push 0')
-;~ 	_('push 0')
-;~ 	_('push 0')
-;~ 	_('push dword[TraderCostValue]')
-;~ 	_('push 0')
-;~ 	_('push TraderCostID')
-;~ 	_('push 1')
-;~ 	_('mov ecx,d')
-;~ 	_('xor edx,edx')
-;~ 	_('call TraderFunction')
-;~ 	_('mov dword[TraderCostID],0')
-;~ 	_('mov dword[TraderCostValue],0')
-;~ 	_('ljmp CommandReturn')
-
-;~ 	_('CommandSalvage:')
-;~ 	_('mov ebx,SalvageGlobal')
-;~ 	_('mov ecx,dword[eax+4]')
-;~ 	_('mov dword[ebx],ecx')
-;~ 	_('push ecx')
-;~ 	_('mov ecx,dword[eax+8]')
-;~ 	_('add ebx,4')
-;~ 	_('mov dword[ebx],ecx')
-;~ 	_('mov edx,dword[eax+c]')
-;~ 	_('mov dword[ebx],ecx')
-;~ 	_('call SalvageFunction')
-;~ 	_('ljmp CommandReturn')
+	_('CommandSalvage:')
+	_('push eax')
+	_('push ecx')
+	_('push ebx')
+	_('mov ebx,SalvageGlobal')
+	_('mov ecx,dword[eax+4]')
+	_('mov dword[ebx],ecx')
+	_('add ebx,4')
+	_('mov ecx,dword[eax+8]')
+	_('mov dword[ebx],ecx')
+	_('mov ebx,dword[eax+4]')
+	_('push ebx')
+	_('mov ebx,dword[eax+8]')
+	_('push ebx')
+	_('mov ebx,dword[eax+c]')
+	_('push ebx')
+	_('call SalvageFunction')
+	_('add esp,C')
+	_('pop ebx')
+	_('pop ecx')
+	_('pop eax')
+	_('ljmp CommandReturn')
 
 	_('CommandIncreaseAttribute:')
 	_('mov edx,dword[eax+4]')
@@ -5141,6 +5206,7 @@ Func CreateCommands()
 	_('mov dword[AgentCopyCount],edx')
 	_('ljmp CommandReturn')
 EndFunc   ;==>CreateCommands
+
 #EndRegion Modification
 
 #Region Online Status
@@ -5168,6 +5234,16 @@ Func _($aASM)
 	;static values hardcoded
 	Local $lBuffer
 	Select
+		Case StringInStr($aASM, " -> ")
+			Local $split = StringSplit($aASM, " -> ", 1)
+			Local $lOpCode = StringReplace($split[2], " ", "")
+			$mASMSize += 0.5 * StringLen($lOpCode)
+			$mASMString &= $lOpCode
+		Case StringInStr($aASM, " -> ")
+			Local $split = StringSplit($aASM, " -> ", 1)
+			Local $lOpCode = StringReplace($split[2], " ", "")
+			$mASMSize += 0.5 * StringLen($lOpCode)
+			$mASMString &= $lOpCode
 		Case StringRight($aASM, 1) = ':'
 			SetValue('Label_' & StringLeft($aASM, StringLen($aASM) - 1), $mASMSize)
 		Case StringInStr($aASM, '/') > 0
