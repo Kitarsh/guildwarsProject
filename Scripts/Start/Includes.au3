@@ -4,10 +4,11 @@
 #include "../Helpers/File.au3"
 #include "../Helpers/Items.au3"
 
-#include "../Actions/Move.au3"
 
 #include "../GUI/SkillsGUI.au3"
 #include "../GUI/InitGUI.au3"
+
+#include "../Actions/Move.au3"
 
 #include "../Interactions/Items.au3"
 #include "../Interactions/Target.au3"

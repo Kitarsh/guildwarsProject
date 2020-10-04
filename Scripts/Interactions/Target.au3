@@ -1,3 +1,7 @@
+Global $TargetModelId_EnemiesToKill_Array = []
+Global $TargetModelId_EnemiesToAvoid_Array = []
+
+
 ;~ Description : Select and attack the nearest enemy of the player.
 Func Target_AttackNearestEnemy()
     Local $nearestEnnemiAgentID
@@ -70,3 +74,27 @@ Func Target_PickUpLoot()
 		EndIf
 	Next
 EndFunc   ;==>PickUpLoot
+
+Func Target_GetAllegiance()
+	Local $lTarget
+	$lTarget = GetCurrentTarget()
+	return DllStructGetData($lTarget, "Allegiance")
+EndFunc
+
+Func Target_GetWeaponType()
+	Local $lTarget
+	$lTarget = GetCurrentTarget()
+	return DllStructGetData($lTarget, "WeaponType")
+EndFunc
+
+Func Target_GetSkill()
+	Local $lTarget
+	$lTarget = GetCurrentTarget()
+	return DllStructGetData($lTarget, "Skill")
+EndFunc
+
+Func Target_GetDaggerStatus()
+	Local $lTarget
+	$lTarget = GetCurrentTarget()
+	return DllStructGetData($lTarget, "DaggerStatus")
+EndFunc

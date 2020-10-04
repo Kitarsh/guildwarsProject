@@ -1,7 +1,15 @@
-;~ Log file
 #include "../../../Start/Start.au3"
 Local $processId = ProcessExists("gw.exe")
 MemoryOpen($processId)
+
+Redim $TargetModelId_EnemiesToKill_Array[2] 
+$TargetModelId_EnemiesToKill_Array[0] = 2440 ; Massif élémentaire
+$TargetModelId_EnemiesToKill_Array[1] = 2405 ; Cobble Cogneroc
+
+Redim $TargetModelId_EnemiesToAvoid_Array[3]
+$TargetModelId_EnemiesToAvoid_Array[0] = 2404 ; Flint Toucheroc
+$TargetModelId_EnemiesToAvoid_Array[1] = 2457 ; Grawl Ulodyte
+$TargetModelId_EnemiesToAvoid_Array[1] = 2458 ; Grawl
 While 1
     TravelTo(39)
     
@@ -23,78 +31,27 @@ While 1
     Move(-4747, -65)
     WaitMapLoading()
 
-    MoveTo(-188, 3308)
-    Fight_FightingPattern()
-        If GetIsDead(-2) Then ContinueLoop
-    Target_PickUpLoot()
-        If GetIsDead(-2) Then ContinueLoop
+    Local $runWaypoints = [ _
+        [-188, 3308], _
+        [1292, 5392], _
+        [4150, 5056], _
+        [6983, 8521], _
+        [5038, 10341], _
+        [3412, 11467], _
+        [2571, 14191], _
+        [1200, 13434], _
+        [-1058, 11413], _
+        [-2856, 13483], _
+        [-5510, 14430], _
+        [-4786, 10490], _
+        [-5537, 7758] _
+    ]
 
-    MoveTo(1292, 5392)
-    Fight_FightingPattern()
-        If GetIsDead(-2) Then ContinueLoop
-    Target_PickUpLoot()
-        If GetIsDead(-2) Then ContinueLoop
-
-    MoveTo(4150, 5056)
-    Fight_FightingPattern()
-        If GetIsDead(-2) Then ContinueLoop
-    Target_PickUpLoot()
-        If GetIsDead(-2) Then ContinueLoop
-
-    MoveTo(6983, 8521)
-    MoveTo(5038, 10341)
-    Fight_FightingPattern()
-        If GetIsDead(-2) Then ContinueLoop
-    Target_PickUpLoot()
-        If GetIsDead(-2) Then ContinueLoop
-
-    MoveTo(3412, 11467)
-    Fight_FightingPattern()
-        If GetIsDead(-2) Then ContinueLoop
-    Target_PickUpLoot()
-        If GetIsDead(-2) Then ContinueLoop
-
-    MoveTo(2571, 14191)
-    Fight_FightingPattern()
-        If GetIsDead(-2) Then ContinueLoop
-    Target_PickUpLoot()
-        If GetIsDead(-2) Then ContinueLoop
-
-    MoveTo(1200, 13434)
-    Fight_FightingPattern()
-        If GetIsDead(-2) Then ContinueLoop
-    Target_PickUpLoot()
-        If GetIsDead(-2) Then ContinueLoop
-
-    MoveTo(-1058, 11413)
-    Fight_FightingPattern()
-        If GetIsDead(-2) Then ContinueLoop
-    Target_PickUpLoot()
-        If GetIsDead(-2) Then ContinueLoop
-
-    MoveTo(-2856, 13483)
-    Fight_FightingPattern()
-        If GetIsDead(-2) Then ContinueLoop
-    Target_PickUpLoot()
-        If GetIsDead(-2) Then ContinueLoop
-
-    MoveTo(-5510, 14430)
-    Fight_FightingPattern()
-        If GetIsDead(-2) Then ContinueLoop
-    Target_PickUpLoot()
-        If GetIsDead(-2) Then ContinueLoop
-
-    MoveTo(-4786, 10490)
-    Fight_FightingPattern()
-        If GetIsDead(-2) Then ContinueLoop
-    Target_PickUpLoot()
-        If GetIsDead(-2) Then ContinueLoop
-
-    MoveTo(-5537, 7758)
-    Fight_FightingPattern()
-        If GetIsDead(-2) Then ContinueLoop
-    Target_PickUpLoot()
-        If GetIsDead(-2) Then ContinueLoop
+    Local $runState = 0
+    For $i = 0 To UBound($runWaypoints) - 1
+        $runState = Move_GoToAndFightThrough($runWaypoints[$i][0], $runWaypoints[$i][1], 0)
+        If $runState == -1 Then ExitLoop
+    Next
 WEnd
 MemoryClose()
 $mGWProcHandle = 0

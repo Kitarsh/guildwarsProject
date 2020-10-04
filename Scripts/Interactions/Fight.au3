@@ -1,14 +1,19 @@
 ; Description : Execute the global fighting pattern.
-Func Fight_FightingPattern()
+Func Fight_FightingPattern($aFirstTargetId = 0)
 	Local $nearestEnnemiAgentID
 	Local $distanceToTarget
-	TargetNearestEnemy()
-	
-	Local $lDeadlock = TimerInit()
-	Do
-		$nearestEnnemiAgentID = GetCurrentTargetID()
+	If $aFirstTargetId == 0 Then
+		TargetNearestEnemy()
+		Local $lDeadlock = TimerInit()
+		Do
+			$nearestEnnemiAgentID = GetCurrentTargetID()
+			Sleep(100)
+		Until $nearestEnnemiAgentID <> 0 Or TimerDiff($lDeadlock) > 5000
+	Else 
+		$nearestEnnemiAgentID = $aFirstTargetId
+		ChangeTarget($nearestEnnemiAgentID)
 		Sleep(100)
-	Until $nearestEnnemiAgentID <> 0 Or TimerDiff($lDeadlock) > 5000
+	EndIf
 
 	$distanceToTarget = Target_GetDistanceToTarget()
 	If $distanceToTarget > 1500 Then Return
