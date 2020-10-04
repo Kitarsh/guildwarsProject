@@ -17,9 +17,9 @@ EndFunc ; Merchants_SellMat
 Func Merchants_BuyMat($idMat, $count)
     Local $failure = 0
     For $i = 0 To $count - 1
-        Sleep(100 + 2 * GetPing())
+        Sleep(50 + 2 * GetPing())
         Local $successRequest = TraderRequest($idMat)
-        Sleep(100 + 2 * GetPing())
+        Sleep(50 + 2 * GetPing())
         If $successRequest Then
             Local $successTrade = TraderBuy()
         EndIf

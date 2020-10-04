@@ -7,7 +7,8 @@ Global $idsMaps_ListViewItems[5]
 
 
 Func GUI_Init()
-    GUICreate("Guild Wars Project", 700, 400, -1, -1)
+    GUICreate("Guild Wars Project", 700, 600, -1, -1)
+
 
 	;~ Create an edit box with no text in it
     $idEdit_Console = GUICtrlCreateEdit("", 10, 10, 200, 280)
@@ -17,6 +18,9 @@ Func GUI_Init()
 
 	;~ Create an listview for Maps
     $idMaps_ListView = GUICtrlCreateListView("Maps|", 490, 160, 200, 140)
+
+    ;~ Create the test button
+    $idTest_Btn = GUICtrlCreateButton("Test", 230, 180, 50, 50)
 
     ;~ Create the up button
     $idForward_Btn = GUICtrlCreateButton("↑", 290, 180, 50, 50)
@@ -37,6 +41,25 @@ Func GUI_Init()
     $idPickUpLoot_Btn = GUICtrlCreateButton("Pick Up Loot", 230, 60, 170, 50)
 
     SkillsGUI_InitSkillsBtn()
+
+    ;~ Generate tabs
+    $idfirstTab_Tab = GUICtrlCreateTab(0, 370, 500, 100)
+    GUICtrlCreateTabItem("Merchants")
+
+    ;~ Create the sell rare material button
+    $idSellRareMat_Btn = GUICtrlCreateButton("Sell Rare Mat", 10, 410, 110)
+
+    ;~ Create the sell common material button
+    $idSellCommonMat_Btn = GUICtrlCreateButton("Sell Common Mat", 130, 410, 110)
+
+    ;~ Create the sell weapons button
+    $idSellWeapons_Btn = GUICtrlCreateButton("Sell Weapons", 250, 410, 110)
+
+    ;~ Create the sell weapons button
+    $idStoreGold_Btn = GUICtrlCreateButton("Store Gold", 370, 410, 110)
+    GUICtrlCreateTabItem("Move")
+    GUICtrlCreateLabel("Sample Tab with TabItems", 250, 40)
+    GUICtrlCreateTabItem("")
 
     ;Show window/Make the window visible
     GUISetState(@SW_SHOW)
@@ -80,6 +103,29 @@ Func GUI_Init()
                 ;~ Logging Fight
                 File_LogFunction("Target_PickUpLoot")
             
+            Case $iMsg = $idTest_Btn
+                Local $lAllegiance = Target_GetAllegiance()
+                Local $lDaggerStatus = Target_GetDaggerStatus()
+                Local $lWeaponType = Target_GetWeaponType()
+                Local $lSkill = Target_GetSkill()
+                InitGUI_LogIntoGUIConsole("Allegiance : " & $lAllegiance _
+                                & @CRLF & "WeaponType : " & $lWeaponType _
+                                & @CRLF & "DaggerStatus : " & $lDaggerStatus _
+                                & @CRLF & "Skill : " & $lSkill _
+                                )
+                
+            Case $iMsg = $idSellRareMat_Btn
+                Sell_RareMatInInventory()
+            
+            Case $iMsg = $idSellCommonMat_Btn
+                Sell_CommonMatInInventory()
+            
+            Case $iMsg = $idSellWeapons_Btn
+                Sell_WeaponsInInventory()
+
+            Case $iMsg = $idStoreGold_Btn
+                Gold_Store()
+                
             Case $iMsg = $idSkill1_Btn
                 Target_UseSkillOnTarget(1)
             
@@ -139,14 +185,15 @@ EndFunc ; Init
 
 ; Description : Log the value in the GUI Console.
 Func InitGUI_LogIntoGUIConsole($value = '')
-    $editValue = GUICtrlRead($idEdit_Console)
-    $nowTime = _NowTime(4)
+    $editValue = ''
+    ;~ $editValue = GUICtrlRead($idEdit_Console)
+    $nowTime = _NowTime(5)
     If $editValue == '' Then
         $newEditValue = '[' & $nowTime & '] ' & $value
     Else
         $newEditValue = @CRLF & '[' & $nowTime & '] ' & $value
     EndIf
-    GUICtrlSetData($idEdit_Console, $newEditValue, 1)
+    GUICtrlSetData($idEdit_Console, $newEditValue)
 EndFunc ;~ InitGUI_LogIntoGUIConsole
 
 ; Description : Log the position of the player in the GUI console.
