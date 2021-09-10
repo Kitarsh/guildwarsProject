@@ -1,4 +1,5 @@
 ;~ Including the current project's scripts.
+#include "../Helpers/GWA2_Headers.au3"
 #include "../Helpers/GWA2.au3"
 #include "../Helpers/Array.au3"
 #include "../Helpers/File.au3"

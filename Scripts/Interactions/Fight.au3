@@ -82,6 +82,7 @@ Func Fight_ADaggersPattern($currentTargetAgent)
 	Local $targetToUse
 	
 	If $hp < 0.5 _
+		And IsRecharged(5) _
 		And Not(Fight_EffectIsActive($arrayOfEffects, $assassinDaggerBuild[5 - 1])) _
 			Then
 		$idSkillToUse = 5

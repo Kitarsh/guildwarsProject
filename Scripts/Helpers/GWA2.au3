@@ -6,120 +6,7 @@ If @AutoItX64 Then
 	Exit
 EndIf
 
-;=QUEST=
-Global Const $HEADER_QUEST_ACCEPT				= 0x42	;Accepts a quest from the NPC
-Global Const $HEADER_QUEST_REWARD				= 0x42	;Retrieves Quest reward from NPC
-Global Const $HEADER_QUEST_ABANDON				= 0x13	 ;Abandons the quest
-
-;=HERO=
-Global Const $HEADER_HERO_AGGRESSION			= 0x18	;Sets the heroes aggression level
-Global Const $HEADER_HERO_LOCK					= 0x1A	;Locks the heroes target
-Global Const $HEADER_HERO_TOGGLE_SKILL			= 0x1B	;Enables or disables the heroes skill
-Global Const $HEADER_HERO_CLEAR_FLAG			= 0x1D	;Clears the heroes position flag
-Global Const $HEADER_HERO_PLACE_FLAG			= 0x1D	;Sets the heroes position flag, hero runs to position
-Global Const $HEADER_HERO_ADD					= 0x21	;Adds hero to party
-Global Const $HEADER_HERO_KICK					= 0x22	;Kicks hero from party
-Global Const $HEADER_HEROES_KICK				= 0x22	;Kicks ALL heroes from party
-
-;=PARTY=
-Global Const $HEADER_PARTY_PLACE_FLAG			= 0x1E	;Sets the party position flag, all party-npcs runs to position
-Global Const $HEADER_PARTY_CLEAR_FLAG			= 0x1E	;Clears the party position flag
-Global Const $HEADER_HENCHMAN_ADD				= 0xA7	;Adds henchman to party
-Global Const $HEADER_PARTY_LEAVE				= 0xAA	;Leaves the party
-Global Const $HEADER_HENCHMAN_KICK				= 0x80	;Kicks a henchman from party
-Global Const $HEADER_INVITE_TARGET				= 0xA6	;Invite target player to party
-Global Const $HEADER_INVITE_CANCEL				= 0xA3	;Cancel invitation of player
-Global Const $HEADER_INVITE_ACCEPT				= 0xA2	;Accept invitation to party
-
-;=TARGET (Enemies or NPC)=
-Global Const $HEADER_CALL_TARGET				= 0x26	;Calls the target without attacking (Ctrl+Shift+Space)
-Global Const $HEADER_ATTACK_AGENT				= 0x2D	;Attacks agent (Space IIRC)
-Global Const $HEADER_CANCEL_ACTION				= 0x2F	;Cancels the current action
-Global Const $HEADER_AGENT_FOLLOW				= 0x39	;Follows the agent/npc. Ctrl+Click triggers "I am following Person" in chat
-Global Const $HEADER_NPC_TALK					= 0x40	;talks/goes to npc
-Global Const $HEADER_SIGNPOST_RUN				= 0x58	;Runs to signpost
-
-;=DROP=
-Global Const $HEADER_ITEM_DROP					= 0x33	;Drops item from inventory to ground
-Global Const $HEADER_GOLD_DROP					= 0x36	;Drops gold from inventory to ground
-
-;=BUFFS=
-Global Const $HEADER_STOP_MAINTAIN_ENCH			= 0x30	;Drops buff, cancel enchantmant, whatever you call it
-
-;=ITEMS=
-Global Const $HEADER_ITEM_EQUIP					= 0x37	;Equips item from inventory/chest/no idea
-Global Const $HEADER_ITEM_PICKUP				= 0x46	;Picks up an item from ground
-Global Const $HEADER_ITEM_DESTROY				= 0x70	 ;Destroys the item
-Global Const $HEADER_ITEM_ID					= 0x73	;Identifies item in inventory
-Global Const $HEADER_ITEM_MOVE					= 0x79	;Moves item in inventory
-Global Const $HEADER_ITEMS_ACCEPT_UNCLAIMED		= 0x7A	;Accepts ITEMS not picked up in missions
-Global Const $HEADER_ITEM_MOVE_EX				= 0x7A	;Moves an item, with amount to be moved.
-Global Const $HEADER_SALVAGE_MATS				= 0x81	;Salvages materials from item
-Global Const $HEADER_SALVAGE_MODS				= 0x82	;Salvages mods from item
-Global Const $HEADER_ITEM_USE					= 0x85	;Uses item from inventory/chest
-Global Const $HEADER_ITEM_UNEQUIP				= 0x55	;Unequip item
-Global Const $HEADER_UPGRADE					= 0x85	;used by gwapi. is it even useful? NOT TESTED
-Global Const $HEADER_UPGRADE_ARMOR_1			= 0x85	;used by gwapi. is it even useful? NOT TESTED
-Global Const $HEADER_UPGRADE_ARMOR_2			= 0x88	;used by gwapi. is it even useful? NOT TESTED
-
-;=TRADE=
-Global Const $HEADER_TRADE_PLAYER				= 0x50	;Send trade request to player
-Global Const $HEADER_TRADE_OFFER_ITEM			= 0x02	;Add item to trade window
-Global Const $HEADER_TRADE_SUBMIT_OFFER			= 0x03	;Submit offer
-Global Const $HEADER_TRADE_CHANGE_OFFER			= 0x06	;Change offer
-Global Const $HEADER_TRADE_CANCEL				= 0x01	;Cancel trade
-Global Const $HEADER_TRADE_ACCEPT				= 0x07	;Accept trade
-
-;=TRAVEL=
-Global Const $HEADER_MAP_TRAVEL					= 0xB9	;Travels to outpost via worldmap
-Global Const $HEADER_GUILDHALL_TRAVEL			= 0xB8	;Travels to guild hall
-Global Const $HEADER_GUILDHALL_LEAVE			= 0xBA	;Leaves Guildhall
-
-;=FACTION=
-Global Const $HEADER_FACTION_DONATE				= 0x3C	;Donates kurzick/luxon faction to ally
-
-;=TITLE=
-Global Const $HEADER_TITLE_DISPLAY				= 0x5F	;Displays title (from Gigis Vaettir Bot)
-Global Const $HEADER_TITLE_CLEAR				= 0x60	;Hides title (from Gigis Vaettir Bot)
-
-;=DIALOG=
-Global Const $HEADER_DIALOG						= 0x42	;Sends a dialog to NPC
-Global Const $HEADER_CINEMATIC_SKIP				= 0x6A	;Skips the cinematic
-
-;=SKILL / BUILD=
-Global Const $HEADER_SET_SKILLBAR_SKILL			= 0x63	;Changes a skill on the skillbar
-Global Const $HEADER_LOAD_SKILLBAR				= 0x64	;Loads a complete skillbar
-Global Const $HEADER_CHANGE_SECONDARY			= 0x48	;Changes Secondary class (from Build window, not class changer)
-Global Const $HEADER_SKILL_USE_ALLY				= 0x4D	;used by gwapi. appears to have changed
-Global Const $HEADER_SKILL_USE_FOE				= 0x4D	;used by gwapi. appears to have changed
-Global Const $HEADER_SKILL_USE_ID				= 0x4D	;
-Global Const $HEADER_USE_SKILL					= 0x4D
-Global Const $HEADER_SET_ATTRIBUTES				= 0x11	;hidden in init stuff like sendchat
-Global Const $HEADER_OPEN_SKILLS				= 0x42
-
-;=CHEST=
-Global Const $HEADER_CHEST_OPEN					= 0x5A	;Opens a chest (with key AFAIK)
-Global Const $HEADER_CHANGE_GOLD				= 0x83	;Moves Gold (from chest to inventory, and otherway around IIRC)
-
-;=MISSION=
-Global Const $HEADER_MODE_SWITCH				= 0xA3	;Toggles hard- and normal mode
-Global Const $HEADER_MISSION_ENTER				= 0xAD	;Enter a mission/challenge
-Global Const $HEADER_MISSION_FOREIGN_ENTER		= 0xAD	;Enters a foreign mission/challenge (no idea honestly)
-Global Const $HEADER_OUTPOST_RETURN				= 0xAF	;Returns to outpost after /resign
-
-;=CHAT=
-Global Const $HEADER_SEND_CHAT					= 0x6B	;Needed for sending messages in chat
-
-;=OTHER CONSTANTS=
-Global Const $HEADER_MAX_ATTRIBUTES_CONST_5		= 0x04	;constant at word 5 of max attrib packet. Changed from 3 to four in most recent update
-Global Const $HEADER_MAX_ATTRIBUTES_CONST_22	= 0x04	;constant at word 22 of max attrib packet. Changed from 3 to four in most recent update
-Global Const $HEADER_GO_PLAYER					= 0x3A
-Global Const $HEADER_OPEN_GB_WINDOW				= 0xA0
-Global Const $HEADER_CLOSE_GB_WINDOW			= 0xA1
-Global Const $HEADER_START_RATING_GVG			= 0xAA
-Global Const $HEADER_EQUIP_BAG					= 0x37
-Global Const $HEADER_HOM_DIALOG					= 0x5A
-Global Const $HEADER_PROFESSION_ULOCK			= 0x42
+#Region Headers
 
 #EndRegion Headers
 
@@ -361,7 +248,6 @@ Func Initialize($aGW, $bChangeTitle = True, $aUseStringLog = False, $aUseEventSy
 	$mUseEventSystem = $aUseEventSystem
 
 	If IsString($aGW) Then
-		; this doesn't work. It will only work if the player name is a regex to identify "gw.exe".
 		Local $lProcessList = ProcessList("gw.exe")
 		For $i = 1 To $lProcessList[0][0]
 			$mGWProcessId = $lProcessList[$i][1]
@@ -387,10 +273,7 @@ Func Initialize($aGW, $bChangeTitle = True, $aUseStringLog = False, $aUseEventSy
 	Local $lTemp
 	$mBasePointer = MemoryRead(GetScannedAddress('ScanBasePointer', 8)) ;-3
 	SetValue('BasePointer', '0x' & Hex($mBasePointer, 8))
-	$mAgentBase = GetScannedAddress('ScanAgentBase', -15) + 0x1E
-	$mAgentBase = $mAgentBase + MemoryRead($mAgentBase) + 4
-	$mAgentBase += 0x13
-	$mAgentBase = MemoryRead($mAgentBase)
+	$mAgentBase = MemoryRead(GetScannedAddress('ScanAgentBasePointer', 8) + 0xD) - 8
 	SetValue('AgentBase', '0x' & Hex($mAgentBase, 8))
 	$mMaxAgents = $mAgentBase + 8
 	SetValue('MaxAgents', '0x' & Hex($mMaxAgents, 8))
@@ -398,7 +281,7 @@ Func Initialize($aGW, $bChangeTitle = True, $aUseStringLog = False, $aUseEventSy
 	SetValue('MyID', '0x' & Hex($mMyID, 8))
 	$mCurrentTarget = MemoryRead(GetScannedAddress('ScanCurrentTarget', -14)) ;$mAgentBase - 1280
 	SetValue('PacketLocation', '0x' & Hex(MemoryRead(GetScannedAddress('ScanBaseOffset', 11)), 8))
-	$mPing = MemoryRead(GetScannedAddress('ScanPing', 10))
+	$mPing = MemoryRead(GetScannedAddress('ScanPing', -8))
 	$mMapID = MemoryRead(GetScannedAddress('ScanMapID', 28))
 	$mMapLoading = MemoryRead(GetScannedAddress('ScanMapLoading', 44))
 	$mLoggedIn = MemoryRead(GetScannedAddress('ScanLoggedIn', -3)) - 0x198
@@ -416,8 +299,8 @@ Func Initialize($aGW, $bChangeTitle = True, $aUseStringLog = False, $aUseEventSy
 	SetValue('MainStart', '0x' & Hex($lTemp, 8))
 	SetValue('MainReturn', '0x' & Hex($lTemp + 5, 8))
 	$lTemp = GetScannedAddress('ScanRenderFunc', -0x67)
-    SetValue("RenderingMod", "0x" & Hex($lTemp, 8))
-    SetValue("RenderingModReturn", "0x" & Hex($lTemp + 10, 8))
+    SetValue('RenderingMod', '0x' & Hex($lTemp, 8))
+    SetValue('RenderingModReturn', '0x' & Hex($lTemp + 10, 8))
 	$lTemp = GetScannedAddress('ScanTargetLog', 1)
 	SetValue('TargetLogStart', '0x' & Hex($lTemp, 8))
 	SetValue('TargetLogReturn', '0x' & Hex($lTemp + 5, 8))
@@ -453,13 +336,13 @@ Func Initialize($aGW, $bChangeTitle = True, $aUseStringLog = False, $aUseEventSy
 
 	SetValue('PostMessage', '0x' & Hex(MemoryRead(GetScannedAddress('ScanPostMessage', 11)), 8))
 	SetValue('Sleep', MemoryRead(MemoryRead(GetValue('ScanSleep') + 8) + 3))
-	SetValue('SalvageFunction', '0x' & Hex(GetScannedAddress('ScanSalvageFunction', -10), 8))
+	SetValue('SalvageFunction', MemoryRead(GetValue('ScanSalvageFunction') + 8) - 18)
 	SetValue('SalvageGlobal', MemoryRead(MemoryRead(GetValue('ScanSalvageGlobal') + 8) + 1))
 	SetValue('IncreaseAttributeFunction', '0x' & Hex(GetScannedAddress('ScanIncreaseAttributeFunction', -0x5A), 8))
 	SetValue("DecreaseAttributeFunction", "0x" & Hex(GetScannedAddress("ScanDecreaseAttributeFunction", 25), 8))
 	SetValue('MoveFunction', '0x' & Hex(GetScannedAddress('ScanMoveFunction', 1), 8))
 	SetValue('UseSkillFunction', '0x' & Hex(GetScannedAddress('ScanUseSkillFunction', -0x125), 8))
-	SetValue('ChangeTargetFunction', '0x' & Hex(GetScannedAddress('ScanChangeTargetFunction', -15), 8))
+	SetValue('ChangeTargetFunction', '0x' & Hex(GetScannedAddress('ScanChangeTargetFunction', -0x0089)+1, 8))
 	SetValue('WriteChatFunction', '0x' & Hex(GetScannedAddress('ScanWriteChatFunction', -0x3D), 8))
 	SetValue('SellItemFunction', '0x' & Hex(GetScannedAddress('ScanSellItemFunction', -85), 8))
 	SetValue('PacketSendFunction', '0x' & Hex(GetScannedAddress('ScanPacketSendFunction', -0xC2), 8))
@@ -467,9 +350,9 @@ Func Initialize($aGW, $bChangeTitle = True, $aUseStringLog = False, $aUseEventSy
 	SetValue('ActionFunction', '0x' & Hex(GetScannedAddress('ScanActionFunction', -3), 8))
 	SetValue('UseHeroSkillFunction', '0x' & Hex(GetScannedAddress('ScanUseHeroSkillFunction', -0x59), 8))
 	SetValue('BuyItemBase', '0x' & Hex(MemoryRead(GetScannedAddress('ScanBuyItemBase', 15)), 8))
-	SetValue('TransactionFunction', '0x' & Hex(GetScannedAddress('ScanTransactionFunction', -0x7E), 8))
-	SetValue('RequestQuoteFunction', '0x' & Hex(GetScannedAddress('ScanRequestQuoteFunction', 0x3B), 8)) ;-2
-	SetValue('TraderFunction', '0x' & Hex(GetScannedAddress('ScanTraderFunction', -0x1E), 8))
+	SetValue('TransactionFunction', '0x' & Hex(GetScannedAddress('ScanTransactionFunction', -0x7F), 8))
+	SetValue('RequestQuoteFunction', '0x' & Hex(GetScannedAddress('ScanRequestQuoteFunction', -0x34), 8)) ;-2
+	SetValue('TraderFunction', '0x' & Hex(GetScannedAddress('ScanTraderFunction', 0x1E), 8))
 	SetValue('ClickToMoveFix', '0x' & Hex(GetScannedAddress("ScanClickToMoveFix", 1), 8))
 	SetValue('ChangeStatusFunction', '0x' & Hex(GetScannedAddress("ScanChangeStatusFunction", 1), 8))
 
@@ -556,10 +439,12 @@ Func Scan()
 	_('MainModPtr/4')
 	_('ScanBasePointer:')
 	AddPattern('506A0F6A00FF35') ;85C0750F8BCE
-	_('ScanAgentBase:')
-	AddPattern('538B5D0C568B750885') ;568BF13BF07204
+	_('ScanAgentBasePointer:')
+	AddPattern('FF50104783C6043BFB75E1')
 	_('ScanCurrentTarget:')
 	AddPattern('83C4085B8BE55DC355')
+	_('ScanAgentBasePointer:')
+	AddPattern('FF50104783C6043BFB75E1')
 	_('ScanMyID:')
 	AddPattern('83EC08568BF13B15')
 	_('ScanEngine:')
@@ -573,7 +458,7 @@ Func Scan()
 	_('ScanTargetLog:')
 	AddPattern('5356578BFA894DF4E8')
 	_('ScanChangeTargetFunction:')
-	AddPattern('538B5D0C568B750885') ;33C03BDA0F95C033
+	AddPattern('3BDF0F95') ;33C03BDA0F95C033
 	_('ScanMoveFunction:')
 	AddPattern('558BEC83EC208D45F0') ;558BEC83EC2056578BF98D4DF0
 	_('ScanPing:')
@@ -617,21 +502,21 @@ Func Scan()
 	_('ScanSkillBase:')
 	AddPattern('8D04B6C1E00505')
 	_('ScanUseHeroSkillFunction:')
-	AddPattern('BA02000000B954080000')
+    AddPattern('BA02000000B954080000')
 	_('ScanTransactionFunction:')
-	AddPattern('85FF741D8B4D14EB08') ;558BEC81ECC000000053568B75085783FE108BFA8BD97614
+	AddPattern('85FF741D8B4D14EB08') ;558BEC81ECC000000053568B75085783FE108BFA8BD97614 ;85FF741D8B4D14EB08 ;83FF107614G8AC210000
 	_('ScanBuyItemBase:')
 	AddPattern('D9EED9580CC74004')
 	_('ScanRequestQuoteFunction:')
-	AddPattern('83C4245B8BE55D')
+	AddPattern('8B750C5783FE107614') ;53568B750C5783FE10
 	_('ScanTraderFunction:')
-	AddPattern('83FF10761468AC210000')
+	AddPattern('83FF10761468')
 	_('ScanTraderHook:')
 	AddPattern('50516A466A06') ;007BA579
 	_('ScanSleep:')
 	AddPattern('5F5E5B741A6860EA0000')
 	_('ScanSalvageFunction:')
-	AddPattern('33C58945FC8B45088945F08B450C8945F48B45108945F88D45EC506A10C745EC7E')
+	AddPattern('8BD9897DG0895DF4')
 	_('ScanSalvageGlobal:')
 	AddPattern('8B018B4904A3')
 	_('ScanIncreaseAttributeFunction:')
@@ -1196,7 +1081,7 @@ EndFunc   ;==>TraderRequest
 
 ;~ Description: Buy the requested item.
 Func TraderBuy()
-	If Not GetTraderCostID() Or Not GetTraderCostValue() Then Return False
+    If Not GetTraderCostID() Or Not GetTraderCostValue() Then Return False
 	Enqueue($mTraderBuyPtr, 4)
 	Return True
 EndFunc   ;==>TraderBuy
@@ -1281,7 +1166,7 @@ EndFunc   ;==>WithdrawGold
 ;~ Description: Internal use for moving gold.
 Func ChangeGold($aCharacter, $aStorage)
 	Return SendPacket(0xC, $HEADER_CHANGE_GOLD, $aCharacter, $aStorage) ;0x75
-EndFunc   ;==>ChangeGold
+ EndFunc   ;==>ChangeGold
 #EndRegion Item
 
 #Region H&H
@@ -1428,7 +1313,7 @@ Func GoPlayer($aAgent)
 		$lAgentID = DllStructGetData($aAgent, 'ID')
 	EndIf
 
-	Return SendPacket(0x8, $HEADER_GO_PLAYER, $lAgentID)
+	Return SendPacket(0x8, $HEADER_AGENT_FOLLOW , $lAgentID)
 EndFunc   ;==>GoPlayer
 
 ;~ Description: Talk to an NPC
@@ -1981,7 +1866,7 @@ EndFunc   ;==>SendChat
 #Region Misc
 ;~ Description: Change weapon sets.
 Func ChangeWeaponSet($aSet)
-	Return PerformAction(0x80 + $aSet, 0x1E)
+	Return PerformAction(0x80 + $aSet, 0x1E) ;Return PerformAction(0x80 + $aSet, 0x1E) 0x14A
 EndFunc   ;==>ChangeWeaponSet
 
 ;~ Description: Use a skill.
@@ -2012,9 +1897,8 @@ Func UseSkillEx($lSkill, $lTgt = -2, $aTimeout = 3000)
 	Do
 		Sleep(50)
 		If GetIsDead(-2) = 1 Then Return
-		If GetIsDead($lTgt) = 1 Then Return
 	Until (Not IsRecharged($lSkill)) Or (TimerDiff($lDeadlock) > $aTimeout)
-	If Not IsRecharged($lSkill) Then Sleep($lAftercast * 1000)
+	Sleep($lAftercast * 1000)
 EndFunc   ;==>UseSkillEx
 
 Func IsRecharged($lSkill)
@@ -4344,8 +4228,7 @@ Func ModifyMemory()
 	CreateStringLog()
 ;~ 	CreateStringFilter1()
 ;~ 	CreateStringFilter2()
-	;~ CreateRenderingMod()
-	;~ WriteDetour("RenderingMod", "RenderingModProc")
+	CreateRenderingMod()
 	CreateCommands()
 	CreateDialogHook()
 	$mMemory = MemoryRead(MemoryRead($mBase), 'ptr')
@@ -4373,7 +4256,7 @@ Func ModifyMemory()
 ;~ 	WriteDetour('TargetLogStart', 'TargetLogProc')
 	WriteDetour('TraderHookStart', 'TraderHookProc')
 ;~ 	WriteDetour('LoadFinishedStart', 'LoadFinishedProc')
-	;~ WriteDetour('RenderingMod', 'RenderingModProc')
+	WriteDetour('RenderingMod', 'RenderingModProc')
 ;~ 	WriteDetour('StringLogStart', 'StringLogProc')
 ;~ 	WriteDetour('StringFilter1Start', 'StringFilter1Proc')
 ;~ 	WriteDetour('StringFilter2Start', 'StringFilter2Proc')
@@ -4677,17 +4560,9 @@ EndFunc   ;==>CreateChatLog
 ;~ Description: Internal use only.
 Func CreateTraderHook()
 	_('TraderHookProc:')
-    _('push eax')
-	_('mov eax,dword[ebx+28] -> 8b 43 28')
-	_('mov eax,[eax] -> 8b 00')
-	_('mov dword[TraderCostID],eax')
-	_('mov eax,dword[ebx+28] -> 8b 43 28')
-	_('mov eax,[eax+4] -> 8b 40 04')
-	_('mov dword[TraderCostValue],eax')
-    _('pop eax')
-	_('mov ebx,dword[ebp+C] -> 8B 5D 0C') ; Original bytes
-	_('mov esi,eax') ; Original bytes
-    _('push eax')
+	_('mov dword[TraderCostID],ecx')
+	_('mov dword[TraderCostValue],edx')
+	_('push eax')
 	_('mov eax,dword[TraderQuoteID]')
 	_('inc eax')
 	_('cmp eax,200')
@@ -4695,7 +4570,9 @@ Func CreateTraderHook()
 	_('xor eax,eax')
 	_('TraderSkipReset:')
 	_('mov dword[TraderQuoteID],eax')
-    _('pop eax')
+	_('pop eax')
+	_('mov ebp,esp')
+	_('sub esp,8')
 	_('ljmp TraderHookReturn')
 EndFunc   ;==>CreateTraderHook
 
@@ -4824,10 +4701,29 @@ EndFunc   ;==>CreateStringFilter2
 
 ;~ Description: Internal use only.
 Func CreateRenderingMod()
-	_("RenderingModProc:")
-	_("add esp,4")
-	_("cmp dword[DisableRendering],1")
-	_("ljmp RenderingModReturn")
+;~ 	_('RenderingModProc:')
+;~ 	_('cmp dword[DisableRendering],1')
+;~ 	_('jz RenderingModSkipCompare')
+;~ 	_('cmp eax,ebx')
+;~ 	_('ljne RenderingModReturn')
+;~ 	_('RenderingModSkipCompare:')
+
+;~ 	$mASMSize += 17
+;~ 	$mASMString &= StringTrimLeft(MemoryRead(GetValue("RenderingMod") + 4, "byte[17]"), 2)
+
+;~ 	_('cmp dword[DisableRendering],1')
+;~ 	_('jz DisableRenderingProc')
+;~ 	_('retn')
+
+;~ 	_('DisableRenderingProc:')
+;~ 	_('push 1')
+;~ 	_('call dword[Sleep]')
+;~ 	_('retn')
+
+   _("RenderingModProc:")
+   _("add esp,4")
+   _("cmp dword[DisableRendering],1")
+   _("ljmp RenderingModReturn")
 EndFunc   ;==>CreateRenderingMod
 
 ;~ Description: Internal use only.
@@ -4998,7 +4894,7 @@ Func CreateCommands()
 ;~ 	_('pop ecx')
 ;~ 	_('ljmp CommandReturn')
 
-	_('CommandUseHeroSkill:')
+    _('CommandUseHeroSkill:')
 	_('mov ecx,dword[eax+8]')
 	_('push ecx')
 	_('mov ecx,dword[eax+c]')
@@ -5035,30 +4931,27 @@ Func CreateCommands()
 	_('push 0')
 	_('push 0')
 	_('push C')
-	_('mov ecx,0')
-	_('mov edx,2')
-	_('call RequestQuoteFunction')
-	_('add esp,20')
-	_('ljmp CommandReturn')
-
-	_('CommandRequestQuoteSell:')
-	_('mov dword[TraderCostID],0')
-	_('mov dword[TraderCostValue],0')
-	_('push 0')
-	_('push 0')
-	_('push 0')
-	_('add eax,4')
-	_('push eax')
-	_('push 1')
-	_('push 0')
-	_('push 0')
-	_('push D')
 	_('xor edx,edx')
 	_('call RequestQuoteFunction')
 	_('add esp,20')
 	_('ljmp CommandReturn')
 
-	_('CommandTraderBuy:')
+;~ 	_('CommandRequestQuoteSell:')
+;~ 	_('mov dword[TraderCostID],0')
+;~ 	_('mov dword[TraderCostValue],0')
+;~ 	_('push 0')
+;~ 	_('push 0')
+;~ 	_('push 0')
+;~ 	_('add eax,4')
+;~ 	_('push eax')
+;~ 	_('push 1')
+;~ 	_('push 0')
+;~ 	_('mov ecx,d')
+;~ 	_('xor edx,edx')
+;~ 	_('call RequestQuoteFunction')
+;~ 	_('ljmp CommandReturn')
+
+_('CommandTraderBuy:')
 	_('push 0')
 	_('push TraderCostID')
 	_('push 1')
@@ -5066,33 +4959,12 @@ Func CreateCommands()
 	_('push 0')
 	_('push 0')
 	_('push 0')
+	_('mov ecx,c')
 	_('mov edx,dword[TraderCostValue]')
-	_('push edx')
-	_('push c')
 	_('call TraderFunction')
-	_('add esp,24')
 	_('mov dword[TraderCostID],0')
 	_('mov dword[TraderCostValue],0')
 	_('ljmp CommandReturn')
-
- 	_('CommandTraderSell:')
-	_('push 0')
-	_('push 0')
-	_('push 0')
-	_('push dword[TraderCostValue]')
-	_('push 0')
-	_('push TraderCostID')
-	_('push 1')
-	_('push 0')
-	_('push D')
-	_('mov ecx,d')
-	_('xor edx,edx')
-	_('call TraderFunction')
-	_('add esp,24')
-	_('mov dword[TraderCostID],0')
-	_('mov dword[TraderCostValue],0')
-	_('ljmp CommandReturn')
-
 
 	_('mov esi,eax')
 	_('add esi,10') ;01239A20
@@ -5114,28 +4986,33 @@ Func CreateCommands()
 	_('add esp,24')
 	_('ljmp CommandReturn')
 
-	_('CommandSalvage:')
-	_('push eax')
-	_('push ecx')
-	_('push ebx')
-	_('mov ebx,SalvageGlobal')
-	_('mov ecx,dword[eax+4]')
-	_('mov dword[ebx],ecx')
-	_('add ebx,4')
-	_('mov ecx,dword[eax+8]')
-	_('mov dword[ebx],ecx')
-	_('mov ebx,dword[eax+4]')
-	_('push ebx')
-	_('mov ebx,dword[eax+8]')
-	_('push ebx')
-	_('mov ebx,dword[eax+c]')
-	_('push ebx')
-	_('call SalvageFunction')
-	_('add esp,C')
-	_('pop ebx')
-	_('pop ecx')
-	_('pop eax')
-	_('ljmp CommandReturn')
+;~ 	_('CommandTraderSell:')
+;~ 	_('push 0')
+;~ 	_('push 0')
+;~ 	_('push 0')
+;~ 	_('push dword[TraderCostValue]')
+;~ 	_('push 0')
+;~ 	_('push TraderCostID')
+;~ 	_('push 1')
+;~ 	_('mov ecx,d')
+;~ 	_('xor edx,edx')
+;~ 	_('call TraderFunction')
+;~ 	_('mov dword[TraderCostID],0')
+;~ 	_('mov dword[TraderCostValue],0')
+;~ 	_('ljmp CommandReturn')
+
+;~ 	_('CommandSalvage:')
+;~ 	_('mov ebx,SalvageGlobal')
+;~ 	_('mov ecx,dword[eax+4]')
+;~ 	_('mov dword[ebx],ecx')
+;~ 	_('push ecx')
+;~ 	_('mov ecx,dword[eax+8]')
+;~ 	_('add ebx,4')
+;~ 	_('mov dword[ebx],ecx')
+;~ 	_('mov edx,dword[eax+c]')
+;~ 	_('mov dword[ebx],ecx')
+;~ 	_('call SalvageFunction')
+;~ 	_('ljmp CommandReturn')
 
 	_('CommandIncreaseAttribute:')
 	_('mov edx,dword[eax+4]')
@@ -5190,7 +5067,6 @@ Func CreateCommands()
 	_('mov dword[AgentCopyCount],edx')
 	_('ljmp CommandReturn')
 EndFunc   ;==>CreateCommands
-
 #EndRegion Modification
 
 #Region Online Status
@@ -5218,11 +5094,6 @@ Func _($aASM)
 	;static values hardcoded
 	Local $lBuffer
 	Select
-		Case StringInStr($aASM, " -> ")
-			Local $split = StringSplit($aASM, " -> ", 1)
-			Local $lOpCode = StringReplace($split[2], " ", "")
-			$mASMSize += 0.5 * StringLen($lOpCode)
-			$mASMString &= $lOpCode
 		Case StringRight($aASM, 1) = ':'
 			SetValue('Label_' & StringLeft($aASM, StringLen($aASM) - 1), $mASMSize)
 		Case StringInStr($aASM, '/') > 0
