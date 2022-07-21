@@ -16,8 +16,8 @@
 #include-once
 ;=QUEST=
 ;GAME_SMSG_QUEST_ADD
-Global Const $HEADER_QUEST_ACCEPT = 0x39	;Accepts a quest from the NPC
-Global Const $HEADER_QUEST_REWARD = 0x39	;Retrieves Quest reward from NPC
+Global Const $HEADER_QUEST_ACCEPT = 0x4F	;Accepts a quest from the NPC
+Global Const $HEADER_QUEST_REWARD = 0x4F	;Retrieves Quest reward from NPC
 ;GAME_CMSG_QUEST_ABANDON 0x10 or GAME_SMSG_QUEST_REMOVE 0x52
 Global Const $HEADER_QUEST_ABANDON = 0x0F ;Abandons the quest
 
@@ -27,7 +27,7 @@ Global Const $HEADER_HERO_AGGRESSION = 0x13	;Sets the heroes aggression level
 ;GAME_CMSG_HERO_LOCK_TARGET
 Global Const $HEADER_HERO_LOCK = 0x14	;Locks the heroes target
 ;GAME_CMSG_HERO_SKILL_TOGGLE
-Global Const $HEADER_HERO_TOGGLE_SKILL = 0x17	;Enables or disables the heroes skill
+Global Const $HEADER_HERO_TOGGLE_SKILL = 0x19	;Enables or disables the heroes skill
 ;GAME_CMSG_HERO_FLAG_SINGLE
 Global Const $HEADER_HERO_PLACE_FLAG = 0x18	;Sets the heroes position flag, hero runs to position
 Global Const $HEADER_HERO_CLEAR_FLAG = 0x18	;Clears the heroes position flag
@@ -36,7 +36,6 @@ Global Const $HEADER_HERO_ADD = 0x1C	;Adds hero to party
 ;GAME_CMSG_HERO_KICK 0x1E or GAME_SMSG_PARTY_HERO_REMOVE 0x1C9
 Global Const $HEADER_HERO_KICK = 0x1D	;Kicks hero from party
 Global Const $HEADER_HEROES_KICK = 0x1D	;Kicks ALL heroes from party
-Global Const $HEADER_USE_HERO_SKILL = 0x1A ;For use with UseHeroSkillByPacket() only
 
 ;=PARTY=
 ;GAME_CMSG_HERO_FLAG_ALL
@@ -112,13 +111,13 @@ Global Const $HEADER_EQUIP_BAG = 0x70
 
 ;=TRADE=
 ;GAME_SMSG_TRADE_REQUEST
-Global Const $HEADER_TRADE_PLAYER = 0x47	;Send trade request to player
+Global Const $HEADER_TRADE_PLAYER = 0x00	;Send trade request to player
 ;GAME_SMSG_TRADE_ADD_ITEM
-Global Const $HEADER_TRADE_OFFER_ITEM = 0x02	;Add item to trade window
+Global Const $HEADER_TRADE_OFFER_ITEM = 0x04	;Add item to trade window
 ;GAME_CMSG_TRADE_SEND_OFFER
 Global Const $HEADER_TRADE_SUBMIT_OFFER = 0x03	;Submit offer
 ;GAME_SMSG_TRADE_CHANGE_OFFER
-Global Const $HEADER_TRADE_CHANGE_OFFER = 0x06	;Change offer
+Global Const $HEADER_TRADE_CHANGE_OFFER = 0x02	;Change offer
 ;GAME_CMSG_TRADE_CANCEL
 Global Const $HEADER_TRADE_CANCEL = 0x01	;Cancel trade
 ;GAME_CMSG_TRADE_ACCEPT
@@ -151,15 +150,15 @@ Global Const $HEADER_HOM_DIALOG = 0x58
 
 ;=SKILL / BUILD=
 ;GAME_CMSG_SKILLBAR_SKILL_SET
-Global Const $HEADER_SET_SKILLBAR_SKILL = 0x5C	;Changes a skill on the skillbar
+Global Const $HEADER_SET_SKILLBAR_SKILL = 0x5A	;Changes a skill on the skillbar
 ;GAME_CMSG_SKILLBAR_LOAD
 Global Const $HEADER_LOAD_SKILLBAR = 0x5B	;Loads a complete build
 ;GAME_CMSG_CHANGE_SECOND_PROFESSION
-Global Const $HEADER_CHANGE_SECONDARY = 0x48	;Changes Secondary class (from Build window, not class changer)
+Global Const $HEADER_CHANGE_SECONDARY = 0x3F	;Changes Secondary class (from Build window, not class changer)
 Global Const $HEADER_SKILL_USE_ALLY = 0x4B	;used by gwapi. appears to have changed
 Global Const $HEADER_SKILL_USE_FOE = 0x4B	;used by gwapi. appears to have changed
 Global Const $HEADER_SKILL_USE_ID = 0x4B	;
-Global Const $HEADER_SET_ATTRIBUTES = 0x0E	;hidden in init stuff like sendchat
+Global Const $HEADER_SET_ATTRIBUTES = 0x0F	;hidden in init stuff like sendchat
 Global Const $HEADER_OPEN_SKILLS = 0x40
 ;GAME_CMSG_USE_SKILL
 Global Const $HEADER_USE_SKILL = 0x44
@@ -176,7 +175,7 @@ Global Const $HEADER_CHANGE_GOLD = 0x7A	;Moves Gold (from chest to inventory, an
 Global Const $HEADER_MODE_SWITCH = 0x99	;Toggles hard- and normal mode
 ;GAME_CMSG_PARTY_ENTER_CHALLENGE
 Global Const $HEADER_MISSION_ENTER = 0xA3	;Enter a mission/challenge
-Global Const $HEADER_MISSION_FOREIGN_ENTER = 0xAE	;Enters a foreign mission/challenge (no idea honestly)
+Global Const $HEADER_MISSION_FOREIGN_ENTER = 0xAB	;Enters a foreign mission/challenge (no idea honestly)
 ;GAME_CMSG_PARTY_RETURN_TO_OUTPOST
 Global Const $HEADER_OUTPOST_RETURN = 0xA5	;Returns to outpost after /resign
 
