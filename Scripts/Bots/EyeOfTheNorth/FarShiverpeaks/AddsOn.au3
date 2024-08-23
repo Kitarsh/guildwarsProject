@@ -13,10 +13,6 @@
 ; Return Value(s):
 ; Author(s):		GWCA team
 ;=================================================================================================
-Global Enum $RARITY_White = 0x3D, $RARITY_Blue = 0x3F, $RARITY_Purple = 0x42, $RARITY_Gold = 0x40, $RARITY_Green = 0x43
-
-Global Enum $BAG_Backpack = 1, $BAG_BeltPouch, $BAG_Bag1, $BAG_Bag2, $BAG_EquipmentPack, $BAG_UnclaimedItems = 7, $BAG_Storage1, $BAG_Storage2, _
-		$BAG_Storage3, $BAG_Storage4, $BAG_StorageAnniversary, $BAG_Storage5, $BAG_Storage6, $BAG_Storage7, $BAG_Storage8
 
 Global Enum $HERO_Norgu = 1, $HERO_Goren, $HERO_Tahlkora, $HERO_MasterOfWhispers, $HERO_AcolyteJin, $HERO_Koss, $HERO_Dunkoro, $HERO_AcolyteSousuke, $HERO_Melonni, _
 		$HERO_ZhedShadowhoof, $HERO_GeneralMorgahn, $HERO_MargridTheSly, $HERO_Olias = 14, $HERO_Razah, $HERO_MOX, $HERO_Jora = 18, $HERO_PyreFierceshot, _
@@ -50,7 +46,6 @@ Global Enum $LANGUAGE_English = 0, $LANGUAGE_French = 2, $LANGUAGE_German, $LANG
 
 Global Const $FLAG_RESET = 0x7F800000; unflagging heores
 
-Global $DroknardIsHere = 0
 
 
 Global $intSkillEnergy[8] = [1, 15, 5, 5, 10, 15, 100, 5]
@@ -174,54 +169,6 @@ EndFunc   ;==>CommandHero7
 
 #Region Trade with Players
 
-Func TradePlayer($aAgent)
-	Local $lAgentID
-
-	If IsDllStruct($aAgent) = 0 Then
-		$lAgentID = ConvertID($aAgent)
-	Else
-		$lAgentID = DllStructGetData($aAgent, 'ID')
-	EndIf
-	SendPacket(0x08, $HEADER_TRADE_PLAYER, $lAgentID)
-EndFunc   ;==>TradePlayer
-
-Func SubmitOffer($aAmount);Parameter = gold amount to offer. Like pressing the "Submit Offer" button, but also including the amount of gold offered.
-	SendPacket(0x08, $HEADER_TRADE_SUBMIT_OFFER, $aAmount)
-EndFunc   ;==>SubmitOffer
-
-Func ChangeOffer();No parameters. Like pressing the "Change Offer" button.
-	SendPacket(0x04, $HEADER_TRADE_CHANGE_OFFER)
-EndFunc   ;==>ChangeOffer
-
-Func OfferItem($aItem, $aAmount = 0); not tested! need feedback
-	Local $lItemID, $lAmount
-
-	If IsDllStruct($aItem) = 0 Then
-		$lItemID = $aItem
-		If $aAmount > 0 Then
-			$lAmount = $aAmount
-		Else
-			$lAmount = DllStructGetData(GetItemByItemID($aItem), 'Quantity')
-		EndIf
-	Else
-		$lItemID = DllStructGetData($aItem, 'ID')
-		If $aAmount > 0 Then
-			$lAmount = $aAmount
-		Else
-			$lAmount = DllStructGetData($aItem, 'Quantity')
-		EndIf
-	EndIf
-	SendPacket(0xC, $HEADER_TRADE_OFFER_ITEM, $lItemID, $lAmount)
-EndFunc   ;==>OfferItem
-
-Func CancelTrade();No parameters. Like pressing the "Cancel" button in a trade.
-	SendPacket(0x04, $HEADER_TRADE_CANCEL)
-EndFunc   ;==>CancelTrade
-
-Func AcceptTrade();No parameters. Like pressing the "Accept" button in a trade. Can only be used after both players have submitted their offer.
-	SendPacket(0x04, $HEADER_TRADE_ACCEPT)
-EndFunc   ;==>AcceptTrade
-
 #EndRegion Trade with Players
 
 #Region Action-related commands
@@ -258,34 +205,6 @@ Func PickupItems($iItems = -1, $fMaxDistance = 1012)
 	Until $iItems_Picked = $iItems
 	Return $iItems_Picked
 EndFunc   ;==>PickupItems
-
-;=================================================================================================
-; Function:			GetNearestItemToAgent($aAgent)
-; Description:		Get nearest item lying on floor around $aAgent ($aAgent = -2 ourself), necessary to work with PickUpItems func
-; Parameter(s):		$aAgent: ID of Agent
-; Requirement(s):	GW must be running and Memory must have been scanned for pointers (see Initialize())
-; Return Value(s):	On Success - Returns ID of nearest item
-;					@extended  - distance to item
-; Author(s):		GWCA team, recoded by ddarek
-;=================================================================================================
-Func GetNearestItemToAgent($aAgent)
-	Local $lNearestAgent, $lNearestDistance = 100000000
-	Local $lDistance, $lAgentToCompare
-
-	If IsDllStruct($aAgent) = 0 Then $aAgent = GetAgentByID($aAgent)
-	For $i = 1 To GetMaxAgents()
-		$lAgentToCompare = GetAgentByID($i)
-
-	If DllStructGetData($lAgentToCompare, 'Type') <> 0x400 Then ContinueLoop
-		$lDistance = (DllStructGetData($lAgentToCompare, 'Y') - DllStructGetData($aAgent, 'Y')) ^ 2 + (DllStructGetData($lAgentToCompare, 'X') - DllStructGetData($aAgent, 'X')) ^ 2
-		If $lDistance < $lNearestDistance Then
-			$lNearestAgent = $lAgentToCompare
-			$lNearestDistance = $lDistance
-		EndIf
-	Next
-	SetExtended(Sqrt($lNearestDistance)) ;this could be used to retrieve the distance also
-	Return $lNearestAgent
-EndFunc   ;==>GetNearestItemToAgent
 
 
 Func GetNearestItemByModelId($ModelId, $aAgent = -2 )

@@ -41,7 +41,7 @@ GUICtrlCreateGroup("Status: Current Action", 10, 375 - 90 - 65 + 20+45, 255, 45)
 Global $STATUS = GUICtrlCreateLabel("Script not started yet", 20, 390 - 90 - 65 + 20+45, 235, 25)
 GUICtrlCreateGroup("", -99, -99, 1, 1)
 GUISetOnEvent($GUI_EVENT_CLOSE, "gui_eventHandler")
-GUICtrlSetState($Store, $GUI_CHECKED)
+;~ GUICtrlSetState($Store, $GUI_CHECKED) // Store golds uncheck by default
 GUICtrlSetState($HM, $GUI_CHECKED)
 GUICtrlSetState($BuyPick, $GUI_DISABLE)
 GUISetState(@SW_SHOW)

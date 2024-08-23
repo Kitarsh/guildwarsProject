@@ -12,6 +12,26 @@ global $intrun = 0, $pick_are_here
 
 
 While 1
+	$NumberRun = 0
+	$DeldrimorMade = 0
+	$IDKitBought = 0
+	$RunSuccess = 0
+	$boolrun = True
+
+	GUICtrlSetState($Start, $GUI_DISABLE)
+	GUICtrlSetState($txtName, $GUI_DISABLE)
+	If GUICtrlRead($txtName) = "" Then
+		If Initialize(ProcessExists("gw.exe")) = False Then
+			MsgBox(0, "Error", "Guild Wars it not running.")
+			Exit
+		EndIf
+	Else
+		If Initialize(GUICtrlRead($txtName), "Guild Wars - " & GUICtrlRead($txtName)) = False Then
+			MsgBox(0, "Error", "Can't find a Guild Wars client with that character name.")
+			Exit
+		EndIf
+	EndIf
+
 	If $boolrun = true Then
 		If $NumberRun = 0 Then
 			AdlibRegister("status", 1000)
