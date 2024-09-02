@@ -8,6 +8,7 @@
 
 #include "../GUI/SkillsGUI.au3"
 #include "../GUI/InitGUI.au3"
+#include "../GUI/BaseGUI.au3"
 
 #include "../Actions/Move.au3"
 

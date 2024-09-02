@@ -108,9 +108,15 @@ Func Move_GoToAndFightThrough($aX, $aY, $aRandom = 50)
             Return -1
         ElseIf $resultMove <> 0 Then
             Fight_FightingPattern($resultMove)
-                If GetIsDead(-2) Then Return -1
+            If GetIsDead(-2) Then 
+                $BaseGUI_Deaths_Value = $BaseGUI_Deaths_Value + 1
+                Return -1
+            EndIf
             Target_PickUpLoot()
-                If GetIsDead(-2) Then Return -1
+            If GetIsDead(-2) Then 
+                $BaseGUI_Deaths_Value = $BaseGUI_Deaths_Value + 1
+                Return -1
+            EndIf
     EndIf
     Until $resultMove == 0 or $resultMove == -1
 EndFunc ; Move_GoToAndFightThrough

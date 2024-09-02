@@ -10,8 +10,11 @@ Redim $TargetModelId_EnemiesToAvoid_Array[3]
 $TargetModelId_EnemiesToAvoid_Array[0] = 2404 ; Flint Toucheroc
 $TargetModelId_EnemiesToAvoid_Array[1] = 2457 ; Grawl Ulodyte
 $TargetModelId_EnemiesToAvoid_Array[1] = 2458 ; Grawl
-While 1
+BaseGUI_Init("FarmStoneElemental", "Runs", "Total Granite")
+While $BaseGUI_KillMainLoop = False
+    BaseGUI_ConsoleLog("Moving to Outpost")
     TravelTo(39)
+    $BaseGUI_CounterTwo_Value = Count_Item($ITEM_ID_CommonMat_GraniteSlab)
     
     ; Talk To Chest
     MoveTo(-7274, -1514)
@@ -25,6 +28,10 @@ While 1
     Sell_WeaponsInInventory()
 
     Gold_Store()
+
+    $BaseGUI_CounterTwo_Value = Count_Item($ITEM_ID_CommonMat_GraniteSlab)
+    BaseGUI_Update()
+    BaseGUI_ConsoleLog("Current granite :" & $BaseGUI_CounterTwo_Value)
 
     MoveTo(-6190, -174)
     SwitchMode(1)
@@ -46,10 +53,16 @@ While 1
         [-4786, 10490], _
         [-5537, 7758] _
     ]
-
+    BaseGUI_ConsoleLog("Going outside")
+    $BaseGUI_CounterOne_Value = $BaseGUI_CounterOne_Value + 1
+    BaseGUI_Update()
     Local $runState = 0
     For $i = 0 To UBound($runWaypoints) - 1
+        If ($BaseGUI_KillMainLoop) Then ExitLoop
+        BaseGUI_ConsoleLog("Going to "& $i & " waypoint")
         $runState = Move_GoToAndFightThrough($runWaypoints[$i][0], $runWaypoints[$i][1], 0)
+        $BaseGUI_CounterTwo_Value = Count_Item($ITEM_ID_CommonMat_GraniteSlab)
+        BaseGUI_Update()
         If $runState == -1 Then ExitLoop
     Next
 WEnd

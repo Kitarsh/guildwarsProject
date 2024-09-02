@@ -11,7 +11,19 @@ MemoryOpen($processId)
 
 
 File_LogWhile()
-GUI_Init()
+BaseGUI_Init("WIP", "Loop", "InnerLoop")
+While $BaseGUI_KillMainLoop = False
+    Sleep(1000)
+    $BaseGUI_CounterOne_Value = $BaseGUI_CounterOne_Value + 1
+    $i = 0
+    While $i < 10
+        $BaseGUI_CounterTwo_Value = $BaseGUI_CounterTwo_Value + 1
+        $i = $i+1
+        Sleep(10)
+        BaseGUI_Update()
+    WEnd
+    BaseGUI_ConsoleLog("One Full Loop")
+WEnd
 File_LogVariable("WEnd")
 
 File_LogFunction("MemoryClose")
