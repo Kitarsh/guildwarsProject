@@ -45,6 +45,9 @@ EndFunc; BaseGUI_Update
 ; Description : Log the value in the GUI Console.
 Func BaseGUI_ConsoleLog($value = '')
     $editValue = GUICtrlRead($BaseGUI_GuiIndex_Console)
+    If StringLen($editValue) > 20000 Then 
+        $editValue = StringTrimLeft($editValue, 100)
+    EndIf
     $nowTime = _NowTime(4)
     If $editValue == '' Then
         $newEditValue = '[' & $nowTime & '] ' & $value
