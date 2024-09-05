@@ -46,7 +46,8 @@ EndFunc; BaseGUI_Update
 Func BaseGUI_ConsoleLog($value = '')
     $editValue = GUICtrlRead($BaseGUI_GuiIndex_Console)
     If StringLen($editValue) > 20000 Then 
-        $editValue = StringTrimLeft($editValue, 100)
+        $editValue = StringTrimLeft($editValue, 1000)
+        GUICtrlSetData($BaseGUI_GuiIndex_Console, $editValue) ; Resetting the full value
     EndIf
     $nowTime = _NowTime(4)
     If $editValue == '' Then
@@ -54,7 +55,7 @@ Func BaseGUI_ConsoleLog($value = '')
     Else
         $newEditValue = @CRLF & '[' & $nowTime & '] ' & $value
     EndIf
-    GUICtrlSetData($BaseGUI_GuiIndex_Console, $newEditValue, 1)
+    GUICtrlSetData($BaseGUI_GuiIndex_Console, $newEditValue, 1) ; 1 here is to add at the end of the current value
 EndFunc ;~ BaseGUI_LogIntoGUIConsole
 
 #Region Local
