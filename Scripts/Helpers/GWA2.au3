@@ -295,7 +295,7 @@ Func Initialize($aGW, $bChangeTitle = True, $aUseStringLog = False, $aUseEventSy
 	$mZoomMoving = GetScannedAddress("ScanZoomMoving", 0x21)
 	$mCurrentStatus = MemoryRead(GetScannedAddress('ScanChangeStatusFunction', 35))
 
-	$lTemp = GetScannedAddress('ScanEngine', -0x6E) ;-16
+	$lTemp = GetScannedAddress('ScanEngine', -0x22) ;-16
 	SetValue('MainStart', '0x' & Hex($lTemp, 8))
 	SetValue('MainReturn', '0x' & Hex($lTemp + 5, 8))
 	$lTemp = GetScannedAddress('ScanRenderFunc', -0x67)
@@ -448,7 +448,7 @@ Func Scan()
 	_('ScanMyID:')
 	AddPattern('83EC08568BF13B15')
 	_('ScanEngine:')
-	AddPattern('56FFD083C4048B4E0485C9') ;old 5356DFE0F6C441
+	AddPattern('568B3085F67478EB038D4900D9460C') ;old 5356DFE0F6C441
 	_('ScanRenderFunc:')
     AddPattern('F6C401741C68B1010000BA')
 	_('ScanLoadFinished:')
