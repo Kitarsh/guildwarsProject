@@ -206,13 +206,6 @@ Func Sell($bagIndex)
 	Next
 EndFunc   ;==>Sell
 
-Func GetExtraItemInfo($aitem)
-    If IsDllStruct($aitem) = 0 Then $aAgent = GetItemByItemID($aitem)
-    $lItemExtraPtr = DllStructGetData($aitem, "namestring")
-
-    DllCall($mHandle[0], 'int', 'ReadProcessMemory', 'int', $mHandle[1], 'int', $lItemExtraPtr, 'ptr', $lItemExtraStructPtr, 'int', $lItemExtraStructSize, 'int', '')
-    Return $lItemExtraStruct
-EndFunc   ;==>GetExtraItemInfo
 
 Func CanSell($aitem)
 	local $m = DllStructGetData($aitem, 'ModelID')
@@ -267,7 +260,7 @@ Func GoldIs($bagIndex, $numOfSlots)
 	For $i = 1 To $numOfSlots
 		ConsoleWrite("Checking items: " & $bagIndex & ", " & $i & @CRLF)
 		$aItem = GetItemBySlot($bagIndex, $i)
-		If DllStructGetData($aItem, 'ID') <> 0 And DllStructGetData(GetExtraItemInfo($aItem), 'rarity') = $RARITY_Gold Then
+		If DllStructGetData($aItem, 'ID') <> 0 And DllStructGetData(GetExtraItemInfoBySlot($bagIndex, $i), 'rarity') = $RARITY_Gold Then
 				Do
 					For $bag = 8 To 12; Storage panels are form 8 till 16 (I have only standard amount plus aniversary one)
 						$slot = FindEmptySlot($bag)

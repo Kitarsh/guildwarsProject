@@ -2,3 +2,4 @@
 *.pptx
 /Scripts/Logs/Log*
 Bot Developer*
+.vs/**

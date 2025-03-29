@@ -10,6 +10,8 @@
 global $DeadOnTheRun = 0,$tpspirit = 0, $WeAreDead
 global $intrun = 0, $pick_are_here
 
+;~ BUILD CODE
+;~ OwBj0tf44S3lTQAAAAAAAAAAAAA
 
 While 1
 	$NumberRun = 0
