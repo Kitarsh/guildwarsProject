@@ -9,9 +9,9 @@ Global $BaseGUI_CounterOne_Value = 0
 Global $BaseGUI_CounterTwo_Value = 0
 Global $BaseGUI_KillMainLoop = false
 
-Opt("GUIOnEventMode", 1)
 
 Func BaseGUI_Init($name = 'Guild Wars Project', $counterOneName = "Counter One", $counterTwoName = "Counter Two")
+    Opt("GUIOnEventMode", 1)
     GUICreate($name, 200, 400, -1, -1)
     $verticalpos = 10
     GUICtrlCreateLabel("Timer", 10, $verticalpos, 40, 25)
@@ -68,6 +68,7 @@ Func BaseGUI_local_EventHandler()
             ;Destroy the GUI including the controls
             $BaseGUI_KillMainLoop = true
             GUIDelete()
+            Exit
             ;Exit the script
     EndSelect
 EndFunc; BaseGUI_local_EventHandler

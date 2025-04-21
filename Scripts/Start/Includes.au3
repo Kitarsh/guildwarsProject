@@ -4,7 +4,7 @@
 #include "../Helpers/Array.au3"
 #include "../Helpers/File.au3"
 #include "../Helpers/Items.au3"
-
+#include "ProcessSelector.au3"
 
 #include "../GUI/SkillsGUI.au3"
 #include "../GUI/InitGUI.au3"

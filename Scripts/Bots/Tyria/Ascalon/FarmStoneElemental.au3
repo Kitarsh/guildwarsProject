@@ -1,6 +1,6 @@
 #include "../../../Start/Start.au3"
-Local $processId = ProcessExists("gw.exe")
-MemoryOpen($processId)
+
+MemoryOpen($iSelectedPID)
 
 Redim $TargetModelId_EnemiesToKill_Array[2] 
 $TargetModelId_EnemiesToKill_Array[0] = 2440 ; Massif élémentaire
@@ -11,6 +11,7 @@ $TargetModelId_EnemiesToAvoid_Array[0] = 2404 ; Flint Toucheroc
 $TargetModelId_EnemiesToAvoid_Array[1] = 2457 ; Grawl Ulodyte
 $TargetModelId_EnemiesToAvoid_Array[1] = 2458 ; Grawl
 BaseGUI_Init("FarmStoneElemental", "Runs", "Total Granite")
+BaseGUI_ConsoleLog("BUILD CODE : OwBj0tf44OOMG2BbAeAJgxZ9HA")
 While $BaseGUI_KillMainLoop = False
     BaseGUI_ConsoleLog("Moving to Outpost")
     TravelTo(39)
