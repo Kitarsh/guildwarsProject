@@ -44,15 +44,15 @@ While 1
 			CurrentAction("Moving to Outpost")
 			ZoneMap(675, 0)
 			WaitForLoad()
-			rndslp(4000)
+			rndslp(250)
 			$intrun = 0
 		EndIf
-		rndslp(3000)
+		rndslp(250)
 		If GetGoldCharacter()>80000 Then
 			CurrentAction("Depositing gold")
 			DepositGold(70000)
 		EndIf
-		rndslp(3000)
+		rndslp(250)
 		$NumberRun = $NumberRun +1
 		$intrun = $intrun + 1
 		If GUICtrlRead($Breaks) = $GUI_CHECKED Then
@@ -129,12 +129,12 @@ Func GoOut()
 			Move(4738.72, -27877.23)
 	EndSwitch
 	WaitForLoad()
-	rndslp(5000)
+	rndslp(250)
 	CurrentAction("Moving Back")
 	If $intrun = 1 Then
 		Move(4776, -27888)
 		WaitForLoad()
-		rndslp(5000)
+		rndslp(250)
 		CurrentAction("Going out")
 		Switch (Random(1, 8, 1))
 			Case 1
@@ -155,7 +155,7 @@ Func GoOut()
 				Move(4738.72, -27877.23)
 		EndSwitch
 		WaitForLoad()
-		rndslp(5000)
+		rndslp(250)
 	EndIf
 EndFunc
 
@@ -281,9 +281,9 @@ Func ChestRun()
 	AdlibUnRegister("Running")
 	Do
 		Resign()
-		rndslp(3000)
+		rndslp(500)
 	Until GetIsDead(-2) = 1
-	rndslp(4000)
+	rndslp(500)
 	ReturnToOutpost()
 	WaitForLoad()
 EndFunc
@@ -291,14 +291,14 @@ EndFunc
 Func DoChest()
 	CurrentAction(DllStructGetData(GetItemBySlot(4,10),'quantity'))
 	If Not $WeAreDead then CurrentAction("Going To open This chest")
-	If Not $WeAreDead then GoSignpost(-1)
+	;~ If Not $WeAreDead then GoSignpost(-1)
 	local $TimeCheck = TimerInit()
 	If Not $WeAreDead then $chest = GetCurrentTarget()
 	If Not $WeAreDead then $oldCoordsX = DllStructGetData($chest, "X")
 	If Not $WeAreDead then $oldCoordsY = DllStructGetData($chest, "Y")
 	If Not $WeAreDead then
 		Do
-	        If Not $WeAreDead then GoSignpost(-1)
+	        If Not $WeAreDead then MoveTo($oldCoordsX, $oldCoordsY)
 			rndslp(500)
 		Until CheckArea($oldCoordsX, $oldCoordsY) Or TimerDiff($TimeCheck) > 90000 Or $WeAreDead
 	EndIf
@@ -308,7 +308,7 @@ Func DoChest()
 	If Not $WeAreDead then rndslp(1000)
 	CheckLockpicks()
 	If Not $WeAreDead then TargetNearestItem()
-	If Not $WeAreDead then rndslp(500)
+	If Not $WeAreDead then rndslp(1000)
 	If Not $WeAreDead then $item = GetCurrentTarget()
 	$TimeCheck = TimerInit()
 	If Not $WeAreDead then

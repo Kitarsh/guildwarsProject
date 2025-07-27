@@ -316,7 +316,6 @@ Func WaitForLoad()
 
 	Until $load <> 2 And DllStructGetData($lMe, 'X') <> 0 And DllStructGetData($lMe, 'Y') <> 0 Or $deadlock > 30000
 	CurrentAction("Load complete")
-	rndslp(3000)
 EndFunc   ;==>WaitForLoad
 
 Func CountSlots()
