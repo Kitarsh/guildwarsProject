@@ -62,7 +62,7 @@ Global $PickUpGolds = True			;golden items
 Global $PickUpEliteTomes = True		;elite tomes
 Global $PickUpNormalTomes = True	;regular tomes
 ; ==== Misc Stuff ====
-Global $UseBags = 3	;[1..X] How many of your inventory bags will be used (stuff in there will be sold!)
+Global $UseBags = 4	;[1..X] How many of your inventory bags will be used (stuff in there will be sold!)
 Global $UseHardMode = True	;True if you want to run in HM by default, False for NM
 Global $ShowStatsByDefault = True	;True if you want to see the statsGUI by default, False if it should be hidden
 Global $ForceProcessInventory = False ;DEBUG SETTING: Set true to test the inventory processing logic
