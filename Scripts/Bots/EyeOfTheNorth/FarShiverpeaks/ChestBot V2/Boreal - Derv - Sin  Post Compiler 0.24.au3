@@ -67,6 +67,7 @@ Global $UseHardMode = True	;True if you want to run in HM by default, False for 
 Global $ShowStatsByDefault = True	;True if you want to see the statsGUI by default, False if it should be hidden
 Global $ForceProcessInventory = False ;DEBUG SETTING: Set true to test the inventory processing logic
 Global $ForceOnlyOneRun = True ; Set true to test the bot with only one run
+Global $StorageTabForTome = 3 ;Tab in the storage where the tomes will be stored (1..4)
 
 ; ==== Map IDs ====
 Global Const $MAP_ID_BOREAL_STATION = 675
@@ -300,7 +301,6 @@ EndFunc   ;==>EventHandler
 #Region ChestRun
 Func DoTheJob()
 	Local $tOutpostTimer = Timerinit()
-	
 	If GetMapID() <> $MAP_ID_BOREAL_STATION Then
 	Logger("Traveling to Boreal")
 	TravelTo($MAP_ID_BOREAL_STATION)
@@ -511,18 +511,22 @@ EndFunc
 Func CheckInventory()
 	Local $aItem, $RuneOrInsignia, $Timer
 	If CountFreeSlots($UseBags) >= 5 And Not $ForceProcessInventory Then Return
-	If $ForceOnlyOneRun Then 
-		Logger("Forcing only one run, not checking inventory.") 
-		Exit
-	EndIf
-	Logger("Cleaning Inventory")
 	If GetMapID() <> $MAP_ID_BOREAL_STATION Then TravelTo($MAP_ID_BOREAL_STATION)
 	Sleep(3000)
 	UseChocBunny()
+	Logger("Cleaning Inventory")
+	StoreTomes()
+	Logger("Tome OK")
 	If GetGoldCharacter() >= 50000 Then DepositGold(50000)
 	Logger("Gold OK")
+	If CountFreeSlots($UseBags) >= 5 And Not $ForceProcessInventory Then Return
+	If $ForceOnlyOneRun Then 
+		Logger("Forcing only one full inventory, not cleaning inventory.") 
+		Exit
+	EndIf
 	GoToNPC(GetNearestNPCToCoords(7319, -24874)); Borvorel[Merchant]
-  Logger("Targeted Merchant")
+
+  	Logger("Targeted Merchant")
 	For $lBag = 1 To $UseBags
 		If Not FindIDKit() Then
 			BuySuperiorIDKit()
@@ -555,13 +559,26 @@ Func CanStoreGoldsEx($aItem)
 	Local $r = GetRarity($aItem)
 	Switch $r
 		Case $Rarity_Gold
-			If $m = 22280 Then
+			If $m = 22280 Then ; FoW Scroll
 				Return False
 			Else
 				Return True
 			EndIf
 	EndSwitch
 EndFunc   ;==>CanStoreGolds
+
+Func CanStoreTomes($aItem)
+	Local $m = DllStructGetData($aItem, "ModelID")
+	If $m >= $MODEL_ID_TOME_R_SIN And $m <= $MODEL_ID_TOME_R_PARA Then
+		Logger("Normal Tome found: " & $m)
+		Return True
+	EndIf
+	If $m >= $MODEL_ID_TOME_E_SIN And $m <= $MODEL_ID_TOME_E_PARA Then
+		Logger("Elite Tome found: " & $m)
+		Return True
+	EndIf
+	Return False
+EndFunc ;==>CanStoreTomes
 
 Func StoreGoldsEx()
 	Logger("Storing Golds")
@@ -596,6 +613,39 @@ Func StoreGoldsEx()
 		Next
 	Next
 EndFunc   ;==>StoreGolds
+
+
+Func StoreTomes()
+	Local $aItem, $lItem, $m, $SlotItem, $lbag, $aSlot, $Full, $NSlot, $Bag, $sm
+	For $i = 1 To 4
+		$lbag = GetBag($i)
+		For $j = 1 To DllStructGetData($lbag, 'Slots')
+			$aItem = GetItemBySlot($lbag, $j)
+			If DllStructGetData($aItem, "ID") = 0 Then ContinueLoop
+			$m = DllStructGetData($aItem, "ModelID")
+			If CanStoreTomes($aItem) Then
+				$Bag = $StorageTabForTome + 7 ; +7 here is the offset for the storage bags
+				For $aSlot = 1 To DllStructGetData(GetBag($Bag), "Slots")
+					$SlotItem = GetItemBySlot($Bag, $aSlot)
+					$sm = DllStructGetData($SlotItem, "ModelID")
+					If $m = $sm Then 
+						$Full = False
+						$NSlot = $aSlot
+						ExitLoop
+					Else
+						$Full = True
+					EndIf
+					Sleep(300)
+				Next
+				If $Full = False Then
+					MoveItem($aItem, $Bag, $NSlot)
+					Sleep(300)
+				EndIf
+			EndIf
+		Next
+	Next
+EndFunc   ;==>StoreTomes
+
 
 Func FindEmptySlotEx($BagIndex)
 	Local $LItemINFO, $aSlot
