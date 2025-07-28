@@ -66,6 +66,7 @@ Global $UseBags = 3	;[1..X] How many of your inventory bags will be used (stuff 
 Global $UseHardMode = True	;True if you want to run in HM by default, False for NM
 Global $ShowStatsByDefault = True	;True if you want to see the statsGUI by default, False if it should be hidden
 Global $ForceProcessInventory = False ;DEBUG SETTING: Set true to test the inventory processing logic
+Global $ForceOnlyOneRun = True ; Set true to test the bot with only one run
 
 ; ==== Map IDs ====
 Global Const $MAP_ID_BOREAL_STATION = 675
@@ -509,6 +510,10 @@ EndFunc
 Func CheckInventory()
 	Local $aItem, $RuneOrInsignia, $Timer
 	If CountFreeSlots($UseBags) >= 5 And Not $ForceProcessInventory Then Return
+	If $ForceOnlyOneRun Then 
+		Logger("Forcing only one run, not checking inventory.") 
+		Exit
+	EndIf
 	Logger("Cleaning Inventory")
 	If GetMapID() <> $MAP_ID_BOREAL_STATION Then TravelTo($MAP_ID_BOREAL_STATION)
 	Sleep(3000)
