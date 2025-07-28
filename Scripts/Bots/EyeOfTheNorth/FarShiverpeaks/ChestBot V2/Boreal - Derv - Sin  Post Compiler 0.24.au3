@@ -80,7 +80,7 @@ Global Const $ATTRIBUTE_FAST_CASTING = 7
 Global $BotRunning = False, $BotInitialized = False
 Global $LuckyPointsAtStart, $UnluckyPointsAtStart
 Global $player_status, $player_status_list, $GWPID
-Global Const $status[5][2] = [[4, 0], [1, "Online"], [3, "Away"], [2, "Do not disturb"], [0, "Offline"]]
+Global Const $status[5][2] = [[4, 1], [0, "Offline"], [1, "Online"], [3, "Away"], [2, "Do not disturb"]]
 Global $diff = 0, $StartingTime = 0, $TimeoutTime = 0, $TimeDifference = 0 ;time count variables
 Global $OpenedChestAgentIDs[1]	;dirty fix for not using TargetNearestItem() (black list variable as previously opened chests were not targeted using TargetNearestItem(), now they are)
 Global $storage_full = False
@@ -243,7 +243,7 @@ Func EventHandler()
 						If $i <> $status[0][0] Then $player_status_list &= "|"
 					Next
 					GUICtrlSetData($gui_online_state, "")
-					GUICtrlSetData($gui_online_state, $player_status_list, GetPlayerStatusText())
+					GUICtrlSetData($gui_online_state, $player_status_list, $status[$status[0][1]][1])
 					GUICtrlSetState($gui_online_state, $GUI_ENABLE)
 					GUICtrlSetState($gui_toggle_rendering, $GUI_ENABLE)
 					GUICtrlSetState($gui_toggle_ontop, $GUI_ENABLE)
@@ -256,6 +256,7 @@ Func EventHandler()
 					$UnluckyPointsAtStart = GetUnluckyTitle()
 					;$GWPID = $mGWHwnd
 					$BotInitialized = True
+					change_player_status()
 					Logger("Bot Initialized.")
 					Logger("Ready to start!")
 				Else
