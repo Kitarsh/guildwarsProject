@@ -3,3 +3,4 @@
 ProcessSelector()
 Initialize($iSelectedPID, True, True)
 SkillsBar_LoadFightingPattern()
+SetPlayerStatus(0) ; Offline
