@@ -76,7 +76,7 @@ EndFunc; BaseGUI_local_EventHandler
 Func BaseGUI_local_TimerUpdateDisplay()
 	$time = TimerDiff($BaseGUI_Timer_Value)
     $minutes = Mod($time/1000/60,60)
-    $hours = Mod($time/1000/60/60,60)
+    $hours = Mod($time/1000/60/60,24)
     $days = $time/1000/60/60/24
 	$string = StringFormat("%03ud %02uh %02umin", $days, $hours, $minutes)
 	GUICtrlSetData($BaseGUI_GuiIndex_timer, $string)
