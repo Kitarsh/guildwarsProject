@@ -58,7 +58,7 @@ EndFunc
 ; ==== Set Skill Variables ====
 Global Enum $STAB = 1, $ZEAL, $PIOUS
 ; ==== Pick up behaviour ====
-Global $PickUpGolds = True			;golden items
+Global $PickUpGolds = False			;golden items
 Global $PickUpEliteTomes = True		;elite tomes
 Global $PickUpNormalTomes = True	;regular tomes
 ; ==== Misc Stuff ====
@@ -483,6 +483,10 @@ Func CanPickUp($aItem)
 	If CountFreeSlots() <= 0 Then Return False
 
 	Local $lRarity = GetRarity($aItem)
+	If $lRarity == $Rarity_Gold and Not $PickUpGolds Then
+		Return False
+	EndIf
+
 	If $lRarity == $RARITY_GOLD Then
 		SetExtended($stGolds)
 		Return True
